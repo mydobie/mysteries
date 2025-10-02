@@ -1,9 +1,0 @@
-{
-  "customSyntax": "postcss-styled-syntax",
-  "extends": [
-    "stylelint-config-standard-scss"
-  ],
-  "rules": {
-    "length-zero-no-unit": true
-  }
-}
