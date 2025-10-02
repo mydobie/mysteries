@@ -22,8 +22,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true,
-    "types": ["cypress", "@testing-library/cypress"]
+    "esModuleInterop": true
   },
 
   "include": ["src", "cypress"],

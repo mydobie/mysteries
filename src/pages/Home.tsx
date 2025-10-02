@@ -1,22 +1,28 @@
-import reactLogo from '../assets/react.svg';
-import viteLogo from '/vite.svg';
-
 import { ReactElement } from 'react';
+import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 const Home = (): ReactElement => (
   <>
-    <div>
-      <a href='https://vitejs.dev'>
-        <img src={viteLogo} className='logo' alt='Vite logo' />
-      </a>
-      <a href='https://react.dev'>
-        <img src={reactLogo} className='logo react' alt='React logo' />
-      </a>
-    </div>
-    <h1>Vite + React</h1>
-    <p className='read-the-docs'>
-      Click on the Vite and React logos to learn more
-    </p>
+    <Container>
+      <Row className='justify-content-md-center'>
+        <Col xs lg='10'>
+          <Card className='introCard'>
+            <Card.Header>Unravel the Mystery</Card.Header>
+            <Card.Body>
+              Solve puzzles, uncover hidden clues, and piece together the story.
+              <br />
+              Every detail could be the key.
+            </Card.Body>
+            <Card.Footer>
+              <Link className='btn btn-primary' to='/eleanor/'>
+                Start Your First Case
+              </Link>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   </>
 );
 

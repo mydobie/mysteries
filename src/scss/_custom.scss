@@ -6,3 +6,143 @@ or styles that are applied entire application
 
 NOTE: You can use custom Bootstrap variables stored in the _variables.scss file.
 */
+body {
+  background-color: $deepCharcoal;
+  * {
+    color: $softIvory;
+  }
+}
+
+.navbar {
+  background-color: $midnightBlue;
+
+  * {
+    color: $softIvory;
+  }
+  a {
+    text-decoration: none;
+    &:visited,
+    &:active {
+      color: $softIvory;
+    }
+    &:hover,
+    &:focus {
+      color: $mistGray;
+    }
+  }
+  .playNow {
+    background-color: $burntCopper;
+    border: none;
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $crimsonRust;
+    }
+  }
+}
+
+.caseCard {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: $midnightBlue;
+
+  border: 1px solid $crimsonRust;
+  .caseCard__title {
+    color: $burntCopper;
+  }
+}
+
+.correctCard {
+  background-color: $midnightBlue;
+
+  border: 1px solid $crimsonRust;
+  .caseCard__title {
+    color: $burntCopper;
+  }
+}
+.questionTitle {
+  color: $burntCopper;
+}
+.alert-secondary * {
+  color: var(--ifm-alert-foreground-color);
+}
+
+.btn-primary {
+  background-color: $burntCopper;
+  border: none;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $crimsonRust;
+  }
+}
+
+.typewriter {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.introCard {
+  text-align: center;
+  background: none;
+  border: none;
+
+  .card-header {
+    color: $softIvory;
+    font-size: 2.5em;
+    font-weight: bold;
+  }
+  .card-body {
+    color: $mistGray;
+    font-size: 1.2em;
+  }
+  .card-footer {
+    .btn-primary {
+      background-color: $crimsonRust;
+      border: none;
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: $burntCopper;
+      }
+    }
+  }
+}
+
+.cardHolder {
+  width: 100%;
+  background-color: $midnightBlue;
+}
+
+.modal {
+  a {
+    text-decoration: none;
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
+  }
+  .modal-header,
+  .modal-footer {
+    border: none;
+    color: $burntCopper;
+  }
+  .modal-content {
+    background-color: $midnightBlue;
+  }
+}
+.openFilesModalButton {
+  padding: 0;
+  background: none;
+  text-decoration: none;
+  margin-top: -6px;
+  color: $burntCopper;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: none;
+    text-decoration: underline;
+    color: $burntCopper;
+  }
+}

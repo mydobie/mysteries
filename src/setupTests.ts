@@ -1,6 +1,8 @@
 // Add any code  or items you want run before the tests are run
 // Do not delete this file
+import { TextEncoder, TextDecoder } from 'util';
 
+Object.assign(global, { TextDecoder, TextEncoder });
 import 'jest-axe/extend-expect';
 import { toHaveNoViolations } from 'jest-axe';
 expect.extend(toHaveNoViolations);
