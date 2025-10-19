@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 
-import caseFiles from './caseFiles/CaseFiles.pdf';
+import caseFiles from './caseFiles/caseFiles.pdf';
 import markham from './caseFiles/Markham.pdf';
 import jensen from './caseFiles/Jensen.pdf';
 import ortiz from './caseFiles/Ortiz.pdf';
