@@ -39,6 +39,13 @@ body {
       background-color: $crimsonRust;
     }
   }
+  .dropdown-menu {
+    background-color: $midnightBlue;
+    border: 1px solid $mistGray;
+  }
+  .dropdown-toggle {
+    margin-right: 15px;
+  }
 }
 
 .caseCard {
@@ -54,6 +61,12 @@ body {
 
 .correctCard {
   background-color: $midnightBlue;
+  padding: 15px;
+  margin-top: 15px;
+
+  h3 {
+    color: $burntCopper;
+  }
 
   border: 1px solid $crimsonRust;
   .caseCard__title {
@@ -85,7 +98,7 @@ body {
   text-align: center;
   background: none;
   border: none;
-
+  margin-top: 20px;
   .card-header {
     color: $softIvory;
     font-size: 2.5em;
@@ -105,6 +118,24 @@ body {
         background-color: $burntCopper;
       }
     }
+  }
+}
+
+.gameCard {
+  margin: 50px;
+  text-align: center;
+  background: none;
+  border: none;
+  background-color: $midnightBlue;
+  border: 1px solid $burntCopper !important;
+  border-radius: 6px !important; //var(--bs-card-border-radius);
+  .card-header {
+    color: $softIvory;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  .card-body {
+    color: $mistGray;
   }
 }
 
@@ -145,4 +176,18 @@ body {
     text-decoration: underline;
     color: $burntCopper;
   }
+}
+
+.quote-block,
+.quote-inline {
+  padding: 5px;
+  background: #525252;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.quote-block {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 30px;
 }

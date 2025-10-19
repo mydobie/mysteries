@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { Alert, Card, CardBody } from 'react-bootstrap';
+import CompletedSection from '~/components/CompletedSection';
 
 import packet3 from '../caseFiles/packet3.pdf';
 
@@ -8,24 +9,32 @@ const Solution = () => (
     <CardBody>
       <h3>Congratulations you eliminated 2 suspects</h3>
 
-      <p>Sciencefest flyer: Daniel Keene was 3 hours away.</p>
-      <p>
-        Newspaper article: Under the "Around Northwood" section, it states that
-        all pedestrian bridges were closed and it takes another 30 minutes to
-        cross the river
-      </p>
-      <p>
-        Catherine Rowe - Person of interest form - It gives Catherine's license
-        page number
-      </p>
-      <p>
-        Parking stub - Verifies Catherine was parked across the river in lot B
-        at the time of Eleanor's death
-      </p>
-      <p>
-        Because of the 30 minute walk to cross the river, Catherine could make
-        it to lab at the time of Eleanor's death
-      </p>
+      <CompletedSection
+        items={[
+          <>Sciencefest flyer: Daniel Keene was 3 hours away.</>,
+
+          <>
+            Newspaper article: Under the "Around Northwood" section, it states
+            that all pedestrian bridges were closed and it takes another 30
+            minutes to cross the river
+          </>,
+
+          <>
+            Catherine Rowe - Person of interest form - It gives Catherine's
+            license page number
+          </>,
+
+          <>
+            Parking stub - Verifies Catherine was parked across the river in lot
+            B at the time of Eleanor's death
+          </>,
+
+          <>
+            Because of the 30 minute walk to cross the river, Catherine could
+            make it to lab at the time of Eleanor's death
+          </>,
+        ]}
+      />
 
       <Alert variant='secondary'>
         <p className='mt-4, mb-4'>

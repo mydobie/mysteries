@@ -69,6 +69,7 @@ const Question = ({ setCorrect }: { setCorrect: () => void }) => {
             label={file.label}
             {...register(file.fieldName)}
             key={file.fieldName}
+            id={file.fieldName}
             disabled={
               numChecked >= correctFiles.length &&
               !checkedValues.includes(file.fieldName)

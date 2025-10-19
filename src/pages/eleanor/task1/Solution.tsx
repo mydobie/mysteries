@@ -1,5 +1,6 @@
 import { CardBody, Card, Alert } from 'react-bootstrap';
 import { Link } from 'react-router';
+import CompletedSection from '~/components/CompletedSection';
 
 import packet2 from '../caseFiles/packet2.pdf';
 
@@ -8,24 +9,28 @@ const Solution = () => (
     <CardBody>
       <h3>Congratulations you proved Eleanor's death was not an accident</h3>
 
-      <p>
-        In the Crime scene photo - Chemicals: The label shows that
-        "Chloroxyline" is also known as "Aetherium-monochloride"
-      </p>
-      <p>
-        From the MDS - Chloroxyline sheet: Blood levels rarely reach above 1
-        ml/L by inhalation and that toxic level is 8 ml/L. It is not possible to
-        get to a toxic level by inhalation
-      </p>
-      <p>
-        From the toxicology report: The level of "Aetherium-monochloride" was
-        15.1 ml/L. High enough to kill Eleanor.
-      </p>
-
-      <p>
-        Eleanor had to get a toxic level of Aetherium-monochloride or
-        Chloroxyline by some other way than just accidental inhalation.
-      </p>
+      <CompletedSection
+        items={[
+          <>
+            In the Crime scene photo - Chemicals: The label shows that
+            "Chloroxyline" is also known as "Aetherium-monochloride"
+          </>,
+          <>
+            From the MDS - Chloroxyline sheet: Blood levels rarely reach above 1
+            ml/L by inhalation and that toxic level is 8 ml/L. It is not
+            possible to get to a toxic level by inhalation
+          </>,
+          <>
+            {' '}
+            From the toxicology report: The level of "Aetherium-monochloride"
+            was 15.1 ml/L. High enough to kill Eleanor.
+          </>,
+          <>
+            Eleanor had to get a toxic level of Aetherium-monochloride or
+            Chloroxyline by some other way than just accidental inhalation.
+          </>,
+        ]}
+      />
 
       <Alert variant='secondary'>
         <p className='mt-4, mb-4'>

@@ -11,7 +11,8 @@ const Home = (): ReactElement => {
   return (
     <>
       <Container>
-        {location.pathname !== '/eleanor/' ? (
+        {location.pathname !== '/eleanor/' &&
+        location.pathname !== '/eleanor' ? (
           <Row className='justify-content-md-center'>
             <Col xs lg='10'>
               <Card className='caseCard'>

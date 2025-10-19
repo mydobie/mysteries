@@ -3,4 +3,5 @@ export default {
   ABOUT: { route: 'about', name: 'About' },
   VERSION: { route: 'version', name: 'Version' },
   ELEANOR: { route: 'eleanor', name: 'Eleanor' },
+  AMESWORTH: { route: 'amesworth', name: 'Amesworth' },
 };

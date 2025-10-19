@@ -26,14 +26,11 @@ const Intro = () => {
           <FilesModal />
         </li>
         <li>Read through the case</li>
-        <li>
-          Once you are ready,
-          <br />
-          <Link to='1' className='btn btn-primary'>
-            GO TO TASK 1
-          </Link>
-        </li>
+        <li>Once you are ready,</li>
       </ul>
+      <Link to='1' className='btn btn-primary'>
+        GO TO TASK 1
+      </Link>
     </>
   );
 };
