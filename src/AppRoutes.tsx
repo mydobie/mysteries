@@ -9,6 +9,7 @@ import Version from './pages/Version';
 import FourOhFour from './pages/FourOhFour';
 import EleanorRoutes from './pages/eleanor/Routes';
 import AmesworthRoutes from './pages/amesworth/Routes';
+import ClockMakerRoutes from './pages/clockmaker/Routes';
 
 const AppRoutes = (): ReactElement => (
   <>
@@ -18,6 +19,7 @@ const AppRoutes = (): ReactElement => (
       <Route path={ROUTES.VERSION.route} element={<Version />} />
       {EleanorRoutes}
       {AmesworthRoutes}
+      {ClockMakerRoutes}
       <Route path='*' element={<FourOhFour />} />
     </Routes>
   </>

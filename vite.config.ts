@@ -19,8 +19,11 @@ export default defineConfig({
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
     APP_NAME: JSON.stringify(process.env.npm_package_name),
     GIT_SHA: JSON.stringify(commitHash),
-    USE_DEMO: JSON.stringify(process.env.USE_DEMO),
-    USE_MOCK: JSON.stringify(process.env.USE_MOCK),
+    OPENAI_KEY: JSON.stringify(process.env.OPENAI_KEY),
+    AI_BASE_URL: JSON.stringify(process.env.AI_BASE_URL),
+    AI_MODAL: JSON.stringify(process.env.AI_MODAL),
+    // USE_DEMO: JSON.stringify(process.env.USE_DEMO),
+    // USE_MOCK: JSON.stringify(process.env.USE_MOCK),
     USE_HASH: JSON.stringify(process.env.USE_HASH),
   },
 });

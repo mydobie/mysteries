@@ -71,6 +71,9 @@ const AppNavBar = (): ReactElement => (
         <Dropdown.Item>
           <Link to='/amesworth'>Amesworth Meteorite</Link>
         </Dropdown.Item>
+        <Dropdown.Item>
+          <Link to='/clockmaker'>The Clockmaker</Link>
+        </Dropdown.Item>
       </DropdownButton>
 
       {/* <NavDropdown title='Cases' id='collapsible-nav-dropdown'>

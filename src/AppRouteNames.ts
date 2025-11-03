@@ -4,4 +4,5 @@ export default {
   VERSION: { route: 'version', name: 'Version' },
   ELEANOR: { route: 'eleanor', name: 'Eleanor' },
   AMESWORTH: { route: 'amesworth', name: 'Amesworth' },
+  CLOCKMAKER: { route: 'clockmaker', name: 'Clockmaker' },
 };

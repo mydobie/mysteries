@@ -22,13 +22,11 @@
     "lint:css:css": "stylelint --ignore-path ./.eslintignore './**/*.+(css|scss)'",
     "lint:css:js": "stylelint --ignore-path ./.eslintignore --config .stylelintrcJS './**/*.+(ts|tsx|js|jsx)'",
     "checkCoverage": "node ./utils/testCoverage.js",
-    "uglify": "uglifyjs ",
-    "cypress:demo:dev": "USE_DEMO=true USE_HASH=false USE_MOCK=false vite",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "uglify": "uglifyjs "
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "openai": "^6.7.0",
     "react": "^18.3.0",
     "react-bootstrap": "^2.10.10",
     "react-bootstrap-icons": "^1.11.6",
