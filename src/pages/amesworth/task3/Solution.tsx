@@ -13,7 +13,6 @@ const Solution = () => (
       <CompletedSection
         items={[
           <>
-            {' '}
             Kyle claims to be along the river stargazing. Yet the position of
             the big dipper is how it appears in the spring not the fall. Also,
             it is very difficult to photograph M101 during the fall - so that
@@ -34,20 +33,20 @@ const Solution = () => (
           </>,
         ]}
       />
+      <hr />
 
-      <Alert variant='secondary'>
-        <p className='mt-4, mb-4'>
-          <strong>Your next task is to determine who is StarGazer424.</strong>
-        </p>
-        <Alert.Link href={packet4} role='button'>
-          Download packet 4
-        </Alert.Link>{' '}
-        before going on to task 4
-      </Alert>
+      <h3>Next</h3>
+
+      <p>Task 4 is to determine who is StarGazer424.</p>
+      <ul>
+        <li>
+          <a href={packet4}>Download packet 4</a>
+        </li>
+      </ul>
 
       <p>
         <Link to='/amesworth/4' className='btn btn-primary'>
-          GO TO TASK 4
+          Go to task 4
         </Link>
       </p>
     </CardBody>

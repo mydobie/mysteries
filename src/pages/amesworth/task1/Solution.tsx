@@ -17,28 +17,25 @@ const Solution = () => (
             report, the pattern is different.
           </>,
           <>
-            {' '}
             In the The Amesworth Meteorite: From the Heavens to Northwood file
             it states that the meteorite weights 30 pounds. In the evidence
             inventory report, the weight is listed at 14 pounds.
           </>,
         ]}
       />
+      <hr />
 
-      <Alert variant='secondary'>
-        <p className='mt-4, mb-4'>
-          <strong>
-            Your next task is to determine where the real meteorite is located.
-          </strong>
-        </p>
-        <Alert.Link href={packet2} role='button'>
-          Download packet 2
-        </Alert.Link>{' '}
-        before going on to task 2
-      </Alert>
+      <h3>Next</h3>
+
+      <p>Task 2 is to determine where the real meteorite is located.</p>
+      <ul>
+        <li>
+          <a href={packet2}>Download packet 2</a>
+        </li>
+      </ul>
       <p>
         <Link to='/amesworth/2' className='btn btn-primary'>
-          GO TO TASK 2
+          Go to task 2
         </Link>
       </p>
     </CardBody>

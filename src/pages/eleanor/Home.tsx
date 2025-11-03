@@ -20,7 +20,7 @@ const Home = (): ReactElement => {
                   <Card.Title className='caseCard__title'>
                     Dr. Eleanor Vance
                   </Card.Title>
-                  <Card.Text>
+                  <Card.Text className='typewriter'>
                     Found dead 11:42 p.m. on Wednesday March 13 at Northwood
                     Research Institute Lab 304. Initially ruled an accident, but
                     was it? - <FilesModal />

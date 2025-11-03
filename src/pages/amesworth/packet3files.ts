@@ -1,4 +1,5 @@
 export default [
+  { type: 'separator', fieldName:'separator' },
   { label: 'Suspects letter', fieldName: 'suspectsletter' },
   {
     label: 'Newspaper article - Storyteller',

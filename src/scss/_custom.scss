@@ -61,6 +61,7 @@ body {
 
 .correctCard {
   background-color: $midnightBlue;
+  border: 1px solid $crimsonRust;
   padding: 15px;
   margin-top: 15px;
 
@@ -68,13 +69,34 @@ body {
     color: $burntCopper;
   }
 
-  border: 1px solid $crimsonRust;
+  hr {
+    border-color: $burntCopper;
+    border-width: 5px;
+  }
+  a {
+    color: $burntCopper;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+    &.btn {
+      color: $softIvory;
+      margin-top: 15px;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
   .caseCard__title {
     color: $burntCopper;
   }
 }
 .questionTitle {
   color: $burntCopper;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .alert-secondary * {
   color: var(--ifm-alert-foreground-color);
@@ -237,4 +259,8 @@ body {
     margin-right: 10px;
     color: #6c757d;
   }
+}
+
+.initialGoToButton {
+  margin-top: 20px;
 }

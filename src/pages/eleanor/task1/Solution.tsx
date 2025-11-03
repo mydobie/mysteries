@@ -21,7 +21,6 @@ const Solution = () => (
             possible to get to a toxic level by inhalation
           </>,
           <>
-            {' '}
             From the toxicology report: The level of "Aetherium-monochloride"
             was 15.1 ml/L. High enough to kill Eleanor.
           </>,
@@ -32,21 +31,21 @@ const Solution = () => (
         ]}
       />
 
-      <Alert variant='secondary'>
-        <p className='mt-4, mb-4'>
-          <strong>
-            Your next task is to rule out which two suspects could not be at the
-            lab at the time of Eleanor's death
-          </strong>
-        </p>
-        <Alert.Link href={packet2} role='button'>
-          Download packet 2
-        </Alert.Link>{' '}
-        before going on to task 2
-      </Alert>
+      <hr />
+
+      <h3>Next</h3>
+      <p>
+        Task 2 is to rule out which two suspects could not be at the lab at the
+        time of Eleanor's death
+      </p>
+      <ul>
+        <li>
+          <a href={packet2}>Download packet 2</a>
+        </li>
+      </ul>
       <p>
         <Link to='/eleanor/2' className='btn btn-primary'>
-          GO TO TASK 2
+          Go to task 2
         </Link>
       </p>
     </CardBody>

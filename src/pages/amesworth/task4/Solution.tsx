@@ -14,16 +14,13 @@ const Solution = () => (
       <CompletedSection
         items={[
           <>
-            In his interivew Kyle Jensen stated that{' '}
-            <Quote isBlock>
-              almost five percent cobalt - but I can’t fully prove or publish it
-              until I do more tests
-            </Quote>{' '}
-            The atomic number of cobalt is 27. The StarGazer424 refereed the the
-            meteorite as "my 27 beauty"
+            In his interview Kyle Jensen stated that the meteorite was almost
+            five percent cobalt - but hasn't published it yet so it was not
+            common knowledge. The atomic number of cobalt is 27. The
+            StarGazer424 refereed the the meteorite as "my 27 beauty"
           </>,
           <>
-            In this interview, Kyle Jensen also stated this about the meteorite{' '}
+            In this interview, Kyle Jensen also stated this about the meteorite:
             <Quote isBlock>
               It’s this perfect mystery—something from beyond Earth, and we’re
               just locking it up under glass
@@ -32,13 +29,13 @@ const Solution = () => (
           </>,
         ]}
       />
+      <hr />
 
-      <Alert variant='secondary'>
-        <Alert.Link href={packet5} role='button'>
-          Download packet 5
-        </Alert.Link>{' '}
-        to read the conclusion of the case
-      </Alert>
+      <h3>Next</h3>
+      <p>
+        <a href={packet5}>Download packet 5</a> to read the conclusion of the
+        case
+      </p>
     </CardBody>
   </Card>
 );

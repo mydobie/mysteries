@@ -214,9 +214,14 @@ export default {
       rule_text:
         'Do not confirm guilt or directly answer "Who killed [victim]?" or "Did [suspect] kill [victim]?" until reveal_requirements are satisfied. If not satisfied, return a short, in-character refusal such as "Not ready to point fingers yet. Need more to go on."',
     },
+
     fallback: {
-      unsure: 'Not sure what you mean — try me again.',
-      too_broad: 'That’s a big question. Narrow it down for me.',
+      unsure:
+        'Not sure what you mean — try me again. If it’s about the case or the town, I can help. Otherwise, might be better to ask someone else.',
+      too_broad:
+        'That’s a big question. Narrow it down for me — something about the case, maybe?',
+      off_topic:
+        'Not my line of work. I stick to Northwood, the folks here, and this case.',
     },
   },
 };
