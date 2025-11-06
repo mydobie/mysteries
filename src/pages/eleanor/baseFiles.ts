@@ -2,6 +2,12 @@ export default [
   { label: 'Newspaper article', fieldName: 'newspaper1' },
   { label: "Ann's statement", fieldName: 'ann1' },
   { label: 'Ann and Eleanor photo', fieldName: 'eleanor-and-ann' },
+  {
+    label: 'Research article',
+    fieldName: 'research-article',
+  },
+
+  { type: 'separator', fieldName:'separator' },
   { label: 'Crime scene description', fieldName: 'crime-scene-description' },
   {
     label: 'Crime scene photo - Eleanor Vance',
@@ -23,10 +29,8 @@ export default [
     label: 'Crime scene photo - Whiteboard',
     fieldName: 'crime-scene-whiteboard',
   },
-  {
-    label: 'Research article',
-    fieldName: 'research-article',
-  },
+  { type: 'separator', fieldName:'separator' },
+
   {
     label: 'MSDS - Ammonium Hydroxide',
     fieldName: 'msds-ammonium',
@@ -47,6 +51,7 @@ export default [
     label: 'MSDS - Hydrocloric Acid',
     fieldName: 'msds-hydrocloric',
   },
+  { type: 'separator', fieldName:'separator' },
   {
     label: 'Autopsy report',
     fieldName: 'autopsy',
@@ -59,6 +64,7 @@ export default [
     label: 'Case closed file',
     fieldName: 'case-closed-1',
   },
+  { type: 'separator', fieldName:'separator' },
   {
     label: 'Marcus Adler - Person of interest form',
     fieldName: 'adler-interest-form',
@@ -75,6 +81,7 @@ export default [
     label: 'Marcus Adler - Photo',
     fieldName: 'adler-photo',
   },
+  { type: 'separator', fieldName:'separator' },
   {
     label: 'Daniel Keene - Person of interest form',
     fieldName: 'keene-interest-form',
@@ -91,6 +98,7 @@ export default [
     label: 'Daniel Keene - Photo',
     fieldName: 'keene-photo',
   },
+  { type: 'separator', fieldName:'separator' },
   {
     label: 'Catherine Rowe - Person of interest form',
     fieldName: 'rowe-interest-form',
@@ -107,6 +115,7 @@ export default [
     label: 'Catherine Rowe - Email',
     fieldName: 'rowe-email',
   },
+  { type: 'separator', fieldName:'separator' },
   {
     label: 'Margaret Vance - Person of interest form',
     fieldName: 'vance-interest-form',
@@ -123,6 +132,7 @@ export default [
     label: 'Margaret Vance - Photo',
     fieldName: 'vance-photo',
   },
+  { type: 'separator', fieldName:'separator' },
   {
     label: 'Renee Carter - Person of interest form',
     fieldName: 'carter-interest-form',

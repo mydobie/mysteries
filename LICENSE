@@ -1,9 +1,11 @@
-MIT License
+MIT License (modified)
 
-Copyright (c) 2024 Kim Doberstein
+Note that the PDF files cannot be modified, distributed or posted in any manner. All other code including the React, Typescript, SCSS, and corresponding can be used, modified, merged, published, distributed, etc.
+
+Copyright (c) 2025 Kim Doberstein
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
+of this software excluding PDF files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is

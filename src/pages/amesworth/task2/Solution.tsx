@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { Alert, Card, CardBody } from 'react-bootstrap';
+import { Card, CardBody } from 'react-bootstrap';
 import CompletedSection from '~/components/CompletedSection';
 
 import packet3 from '../caseFiles/packet3.pdf';
@@ -15,8 +15,8 @@ const Solution = () => (
             Northwood.
           </>,
           <>
-            Riverside Grove is ruled because Maya Ortiz in their interview
-            stated that this park is closed due to construction.
+            Riverside Grove is ruled out because Maya Ortiz said in their
+            interview that this park is closed due to construction.
           </>,
           <>
             Observatory Hill had over 200 people as part of the Stargazer event.
@@ -41,19 +41,20 @@ const Solution = () => (
         ]}
       />
 
-      <Alert variant='secondary'>
-        <p className='mt-4, mb-4'>
-          <strong>Your next task is to narrow down the suspects.</strong>
-        </p>
-        <Alert.Link href={packet3} role='button'>
-          Download packet 3
-        </Alert.Link>{' '}
-        before going on to task 3
-      </Alert>
+      <hr />
+
+      <h3>Next</h3>
+
+      <p>Task 3 is to narrow down the suspects.</p>
+      <ul>
+        <li>
+          <a href={packet3}>Download packet 3</a>
+        </li>
+      </ul>
 
       <p>
         <Link to='/amesworth/3' className='btn btn-primary'>
-          GO TO TASK 3
+          Go to task 3
         </Link>
       </p>
     </CardBody>

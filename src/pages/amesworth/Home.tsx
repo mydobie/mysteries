@@ -20,7 +20,7 @@ const Home = (): ReactElement => {
                   <Card.Title className='caseCard__title'>
                     Ameseworth Meteorite
                   </Card.Title>
-                  <Card.Text>
+                  <Card.Text className='typewriter'>
                     Stolen on October 17, 2015 and returned on October 21, 2015
                     ... but was it? - <FilesModal />
                   </Card.Text>

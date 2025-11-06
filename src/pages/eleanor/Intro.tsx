@@ -28,8 +28,8 @@ const Intro = () => {
         <li>Read through the case</li>
         <li>Once you are ready,</li>
       </ul>
-      <Link to='1' className='btn btn-primary'>
-        GO TO TASK 1
+      <Link to='1' className='btn btn-primary initialGoToButton'>
+        Go to task 1
       </Link>
     </>
   );

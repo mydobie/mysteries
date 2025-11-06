@@ -1,11 +1,11 @@
-import { Alert, Card, CardBody } from 'react-bootstrap';
+import { Card, CardBody } from 'react-bootstrap';
 import packet4 from '../caseFiles/packet4.pdf';
 import CompletedSection from '~/components/CompletedSection';
 
 const Solution = () => (
   <Card className='correctCard'>
     <CardBody>
-      <h3>Congratulations you figured out the killer was Margaret Vance</h3>
+      <h3>Congratulations you figured out the murderer was Margaret Vance</h3>
 
       <CompletedSection
         items={[
@@ -35,12 +35,13 @@ const Solution = () => (
         ]}
       />
 
-      <Alert variant='secondary'>
-        <Alert.Link href={packet4} role='button'>
-          Download packet 4
-        </Alert.Link>{' '}
-        to read the conclusion of the case
-      </Alert>
+      <hr />
+
+      <h3>Next</h3>
+      <p>
+        <a href={packet4}>Download packet 4</a> to read the conclusion of the
+        case
+      </p>
     </CardBody>
   </Card>
 );

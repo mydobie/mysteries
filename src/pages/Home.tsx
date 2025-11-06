@@ -1,12 +1,19 @@
 import { ReactElement } from 'react';
-import { Card, Col, Container, Row, CardGroup } from 'react-bootstrap';
+import { Card, Col, Container, Row, CardGroup, Image } from 'react-bootstrap';
 import { Link } from 'react-router';
+import detective from '../assets/detective.png';
 
 const Home = (): ReactElement => (
   <>
     <Container>
-      <Row className='justify-content-md-center'>
-        <Col xs lg='10'>
+      <Row className='justify-content-sm-center'>
+        <Col sm='auto' className='d-none d-sm-block'>
+          <Image
+            src={detective}
+            style={{ width: '200px', marginTop: '30px' }}
+          />
+        </Col>
+        <Col sm='auto'>
           <Card className='introCard'>
             <Card.Header>Unravel the Mystery</Card.Header>
             <Card.Body>

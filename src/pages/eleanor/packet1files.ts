@@ -1,4 +1,5 @@
 export default [
+  { type: 'separator', fieldName:'separator' },
   { label: 'Case reopened letter ', fieldName: 'reopenedLetter' },
   {
     label: 'Newspaper article - Reclassified as Homicide',
