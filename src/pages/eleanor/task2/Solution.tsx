@@ -21,7 +21,7 @@ const Solution = () => (
 
           <>
             Catherine Rowe - Person of interest form - It gives Catherine's
-            license page number
+            license plate number
           </>,
 
           <>

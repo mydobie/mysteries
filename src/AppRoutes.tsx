@@ -10,6 +10,7 @@ import FourOhFour from './pages/FourOhFour';
 import EleanorRoutes from './pages/eleanor/Routes';
 import AmesworthRoutes from './pages/amesworth/Routes';
 import ClockMakerRoutes from './pages/clockmaker/Routes';
+import EchoRoutes from './pages/echo/Routes';
 
 const AppRoutes = (): ReactElement => (
   <>
@@ -20,6 +21,7 @@ const AppRoutes = (): ReactElement => (
       {EleanorRoutes}
       {AmesworthRoutes}
       {ClockMakerRoutes}
+      {EchoRoutes}
       <Route path='*' element={<FourOhFour />} />
     </Routes>
   </>

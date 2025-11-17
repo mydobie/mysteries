@@ -2,6 +2,8 @@ import OpenAI from 'openai';
 import initialPrompts from './aiInitialPrompts';
 import { calibration_prompt } from './calibrationPrompt';
 
+const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
+
 
 
 export type Message = {
@@ -43,10 +45,14 @@ export async function generateResponse(
       messages: aiNewLog,
     });
 
-    const response = chatCompletion.choices[0].message.content;
-    // await sleep(1500);
-    // const response =
-    //   'Yes. The three primary suspects are:\n\n- Lydia Pike — motive: inheritance/financial hardship; alibi: claims she was home, but GPS places her near the shop around 11 PM; evidence: argued with Harlan earlier, gloves found at the scene.\n\n- Benny Moss — motive: Harlan’s confession would expose an old theft; alibi: says he was inventorying his shop alone; evidence: van near scene at 12:18 AM, partial fingerprints inside the clock, ledger entries linking him.\n\n- June Taylor — motive: loyalty to Harlan and disagreements about the business; alibi: neighbors say she was home by 9:45 PM; evidence: brass polish residue on her supplies, and she discovered the body.';
+        const response = chatCompletion.choices[0].message.content;
+
+    // sleep(1500);
+    
+    // const response =  "Raymond Holt: Start with the four people who got notes. They’re the ones with secrets, and whoever’s leaking information had access to at least one of them.\n\n- Gordy Skoglund — runs the bait shop. Nervous about the muskie story. Might slip when he talks fishing.  \n- Aaron Heller — teacher. Talks a lot, even in his sleep. Financial details could point to someone in town.  \n- Martha Kellen — Cedar Spoon Pies. Worried about reputation, fusses over details.  \n- Darla Orlander — guarded, protective. If she trusts you she’ll open up; otherwise she’ll clam up.\n\nIf you want a lead on who could have overheard anything or where to look next, talk to me after those interviews. Quiet as a dock in January, I’ll parse it."
+        
+
+
 
     return {
       response,

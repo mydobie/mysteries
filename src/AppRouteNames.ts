@@ -5,4 +5,5 @@ export default {
   ELEANOR: { route: 'eleanor', name: 'Eleanor' },
   AMESWORTH: { route: 'amesworth', name: 'Amesworth' },
   CLOCKMAKER: { route: 'clockmaker', name: 'Clockmaker' },
+  ECHO: { route: 'echo', name: 'Echo' },
 };
