@@ -3,7 +3,9 @@ import darlaNote from './assets/ransom/darla-note.png';
 import marthaNote from './assets/ransom/martha-note.png';
 import aaronNote from './assets/ransom/aaron-note.png';
 import { useState } from 'react';
-import { Modal, Image, Button} from 'react-bootstrap';
+import { Modal, Image, Button } from 'react-bootstrap';
+import { DOC_REPLACEMENT_TEXT, UI_TEXT } from './constants';
+import { removeRegexPatterns } from './utils';
 
 export type Doc = {
   label: string;
@@ -72,18 +74,16 @@ export const useDocsDrawer = () => {
   const [docs, setDocs] = useState([...docList]);
 
   const setDocShowById = (id: string, show: boolean) => {
-    setDocs(docs.map((doc) => (doc.id === id ? { ...doc, show } : doc)));
+    setDocs((prevDocs) =>
+      prevDocs.map((doc) => (doc.id === id ? { ...doc, show } : doc)),
+    );
   };
 
   const setDocShow = (response: string, show: boolean) => {
     const doc = getDoc(response);
     if (doc) {
       setDocShowById(doc.id, show);
-      return doc.regex.reduce(
-        (cleanedResponse, regex) =>
-          cleanedResponse.replace(regex, ' See doc drawer. '),
-        response,
-      );
+      return removeRegexPatterns(response, doc.regex, DOC_REPLACEMENT_TEXT);
     }
     return response;
   };
@@ -91,19 +91,20 @@ export const useDocsDrawer = () => {
   const setAllDocsShow = (response: string, show: boolean) => {
     const matchingDocs = getAllDocs(response);
     const matchingDocIds = new Set(matchingDocs.map((doc) => doc.id));
-    
+
     // Update all matching docs in a single state update
     setDocs((prevDocs) =>
       prevDocs.map((doc) =>
-        matchingDocIds.has(doc.id) ? { ...doc, show } : doc
-      )
+        matchingDocIds.has(doc.id) ? { ...doc, show } : doc,
+      ),
     );
-    
+
     // Remove all doc regex patterns from the response
     return matchingDocs.reduce((cleanedResponse, doc) => {
-      return doc.regex.reduce(
-        (acc, regex) => acc.replace(regex, ' See doc drawer. '),
+      return removeRegexPatterns(
         cleanedResponse,
+        doc.regex,
+        DOC_REPLACEMENT_TEXT,
       );
     }, response);
   };
@@ -112,38 +113,50 @@ export const useDocsDrawer = () => {
 };
 
 export const DocsDrawer = ({ docs }: { docs: Doc[] }) => {
-  const [modalOpen, setModalOpen] = useState(false);
   const [selectedDoc, setSelectedDoc] = useState<Doc | null>(null);
 
   const handleOpenModal = (doc: Doc) => {
     setSelectedDoc(doc);
-    setModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setModalOpen(false);
     setSelectedDoc(null);
   };
+
   return (
     <>
-      {modalOpen && (
-        <Modal show={modalOpen} onHide={handleCloseModal} size="lg">
-          <Modal.Header closeButton>
-            <Modal.Title>{selectedDoc?.label}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-           
-           {selectedDoc?.docContent && <div>{selectedDoc?.docContent}</div>}
-           {selectedDoc?.docImage && <Image src={selectedDoc?.docImage} alt={selectedDoc?.label} fluid />}
-          </Modal.Body>
-        </Modal>
-      )}
+      <Modal show={!!selectedDoc} onHide={handleCloseModal} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedDoc?.label}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedDoc?.docContent && (
+            <div>{selectedDoc.docContent}</div>
+          )}
+          {selectedDoc?.docImage && (
+            <Image
+              src={selectedDoc.docImage}
+              alt={selectedDoc.label}
+              fluid
+            />
+          )}
+        </Modal.Body>
+      </Modal>
 
       <div>
-        DOCS DRAWER:
-        {docs.map((doc) =>
-          doc.show ? <Button variant="link" key={doc.id} onClick={() => handleOpenModal(doc)}>{doc.label}</Button> : null,
-        )}
+        <strong>{UI_TEXT.DOCS_DRAWER_LABEL}</strong>
+        {docs
+          .filter((doc) => doc.show)
+          .map((doc) => (
+            <Button
+              variant="link"
+              key={doc.id}
+              onClick={() => handleOpenModal(doc)}
+              aria-label={`View ${doc.label}`}
+            >
+              {doc.label}
+            </Button>
+          ))}
       </div>
     </>
   );

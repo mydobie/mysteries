@@ -6,14 +6,14 @@ import {
   InputGroup,
   Spinner,
   Alert,
-  Stack,
 } from 'react-bootstrap';
 
 import { generateResponse, Message } from './AIChat';
 import AILoading from './assets/AILoading';
 import OpenAI from 'openai';
-import Characters from './Characters';
-import { getAllDocs } from './DocsDrawer';
+import { MessageItem } from './MessageItem';
+import { generateMessageId } from './utils';
+import { AI_INTRO_MESSAGE, UI_TEXT } from './constants';
 
 export default ({
   aiKey,
@@ -32,40 +32,41 @@ export default ({
   const [aiLog, setAILog] = React.useState<Message[]>([]);
   const [aiError, setAiError] = React.useState('');
 
-  /* Items that could be sent as prompts to make this file more generic */
-
-  const AIIntro =
-    'Hello I am Detective Raymond Holt retired from the Northwood police department.  I was asked to help with the suspicious death of Harlan Pike. Ask me anything about the case to determine what happened.';
-
-  const openai = new OpenAI({
-    apiKey: aiKey,
-    baseURL: baseURL,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = React.useMemo(
+    () =>
+      new OpenAI({
+        apiKey: aiKey,
+        baseURL: baseURL,
+        dangerouslyAllowBrowser: true,
+      }),
+    [aiKey, baseURL],
+  );
 
   // guard to ensure the initial loader only runs once (React StrictMode can
   // invoke mount effects twice in dev). We use a ref so it survives re-renders
   // without triggering effects.
   const initializedRef = React.useRef(false);
-  const scrollableDivRef = React.useRef(null);
+  const scrollableDivRef = React.useRef<HTMLDivElement | null>(null);
   const processedMessageIdsRef = React.useRef<Set<string>>(new Set());
   
   React.useEffect(() => {
     if (scrollableDivRef.current) {
-      //@ts-ignore
       scrollableDivRef.current.scrollTop =
-        //@ts-ignore
         scrollableDivRef.current.scrollHeight;
     }
   }, [log]);
 
   // Process new assistant messages for doc references
   React.useEffect(() => {
-    log.forEach((message) => {
-      if (message.role === 'assistant' && !processedMessageIdsRef.current.has(message.id)) {
-        processedMessageIdsRef.current.add(message.id);
-        setDocShow(message.content, true);
-      }
+    const newMessages = log.filter(
+      (message) =>
+        message.role === 'assistant' &&
+        !processedMessageIdsRef.current.has(message.id),
+    );
+
+    newMessages.forEach((message) => {
+      processedMessageIdsRef.current.add(message.id);
+      setDocShow(message.content, true);
     });
   }, [log, setDocShow]);
 
@@ -76,19 +77,23 @@ export default ({
       openai,
       aiModel,
       '',
-      aiLog,
+      [],
     );
-    // append the developer response using the functional updater as well
     setLoading(false);
     if (error) {
-      setAiError(
-        'There is an issue loading the initial information.  Please refresh the page.',
-      );
+      setAiError(UI_TEXT.INITIAL_LOAD_ERROR);
     } else if (newAiLog) {
-      setLog((prev) => [...prev, { role: 'assistant', content: AIIntro, id:`${Date.now()}-assistant-intro` }]);
+      setLog((prev) => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: AI_INTRO_MESSAGE,
+          id: generateMessageId('assistant-intro'),
+        },
+      ]);
       setAILog(newAiLog);
     }
-  }, []);
+  }, [openai, aiModel]);
 
   React.useEffect(() => {
     // invoke the async initializer only once. In React 18 StrictMode this
@@ -99,139 +104,114 @@ export default ({
     }
   }, [loadInitial]);
 
-  const onClick = async (prompt: string = '') => {
-    setLoading(true);
+  const onClick = React.useCallback(
+    async (prompt: string = '') => {
+      const messageContent = prompt || input;
+      if (!messageContent.trim()) return;
 
-    setLog((prev) => [...prev, { role: 'user', content: prompt || input, id:`${Date.now()}-user` }]);
-    setInput('');
-    const { aiLog: newAiLog, error } = await generateResponse(
-      openai,
-      aiModel,
-      prompt || input,
-      aiLog,
-    );
+      setLoading(true);
+      setLog((prev) => [
+        ...prev,
+        {
+          role: 'user',
+          content: messageContent,
+          id: generateMessageId('user'),
+        },
+      ]);
+      setInput('');
 
-    setLoading(false);
+      const { aiLog: newAiLog, error } = await generateResponse(
+        openai,
+        aiModel,
+        messageContent,
+        aiLog,
+      );
 
-    if (error) {
-      setAiError(error);
-    } else if (newAiLog) {
-      setLog((prev) => [...prev, newAiLog[newAiLog.length - 1]]);
-      setAILog(newAiLog);
-    }
-  };
+      setLoading(false);
 
-  const getMessageName = (rawMessage: string, role: Message['role'], key: string) => {
-    let charName = 'Me';
-    let message = rawMessage;
-    let charProfileImage = null;
-    if (role !== 'user') {
-      const { name, profileImage, regex } = Characters(rawMessage) || {};
-      charName = name || '';
-      charProfileImage = profileImage;
-
-      // Remove character regex patterns from message
-      message =
-        regex?.reduce((acc, curr) => acc.replace(curr, ''), rawMessage) || rawMessage;
-
-      // Remove all doc regex patterns from message display (doc processing happens in useEffect)
-      const docs = getAllDocs(message);
-      if (docs.length > 0) {
-        message = docs.reduce((cleanedResponse, doc) => {
-          return doc.regex.reduce(
-            (acc, regex) => acc.replace(regex, ' See doc drawer. '),
-            cleanedResponse,
-          );
-        }, message);
+      if (error) {
+        setAiError(error);
+      } else if (newAiLog) {
+        setLog((prev) => [...prev, newAiLog[newAiLog.length - 1]]);
+        setAILog(newAiLog);
       }
-    }
+    },
+    [input, openai, aiModel, aiLog],
+  );
 
-    return (
-      <Stack
-        direction='horizontal'
-        gap={2}
-        className={`aiLog_messages-message ${role === 'user' ? 'user' : ''}`}
-        key={key}
-        style={{ alignItems: 'start' }}
-      >
-        {role !== 'user' && charProfileImage ? (
-          <img
-            src={charProfileImage}
-            alt={''}
-            style={{ width: '40px', height: '40px' }}
-          />
-        ) : null}
-
-        <div className='aiLog_messages-message'>
-          {!!charName ? <strong>{charName}: </strong> : null}
-
-          {message}
-        </div>
-      </Stack>
-    );
-
-    /*
-  <Stack
-              direction='horizontal'
-              gap={2}
-              className={`aiLog_messages-message ${message.role === 'user' ? 'user' : ''}`}
-              key={index}
-              style={{ alignItems: 'start' }}
-            >
-              {message.role === 'user' ? null : (
-                <img
-                  src={Characters(message.content)?.profileImage}
-                  alt={Characters(message.content)?.name}
-                  style={{ width: '40px', height: '40px' }}
-                />
-              )}
-              <div className='aiLog_messages-message'>
-                <strong>
-                  {message.role === 'user'
-                    ? 'Me: '
-                    : `${Characters(message.content)?.name}: `}
-                  :{' '}
-                </strong>
-                {message.content}
-              </div>
-            </Stack>
-
-
-    */
-  };
+  const handleSubmit = React.useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      onClick();
+    },
+    [onClick],
+  );
 
   return (
-    <Card className='aiLog'>
+    <Card className="aiLog">
       <Card.Body>
-        <div className='aiLog_messages' ref={scrollableDivRef}>
-          {log.map((message) => (
-            getMessageName(message.content, message.role, message.id)
-          ))}
+        <div
+          className="aiLog_messages"
+          ref={scrollableDivRef}
+          role="log"
+          aria-live="polite"
+          aria-label="Chat messages"
+        >
+          {log.length === 0 && !loading ? (
+            <div className="aiLog_messages-message">
+              <p>No messages yet. Start a conversation!</p>
+            </div>
+          ) : (
+            log.map((message) => <MessageItem key={message.id} message={message} />)
+          )}
           {loading ? (
-            <div className='aiLog_messages-message '>
+            <div className="aiLog_messages-message" aria-label="Loading response">
               <AILoading />
             </div>
           ) : null}
         </div>
 
         {aiError ? (
-          <Alert variant='danger'>{aiError} - Please try again</Alert>
+          <Alert variant="danger" role="alert" id="error-message">
+            {aiError}
+            {UI_TEXT.ERROR_RETRY}
+          </Alert>
         ) : null}
 
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <InputGroup>
             <Form.Control
-              as='textarea' // Use textarea for multi-line input
-              placeholder={loading ? 'Loading ....' : 'Ask a question ...'}
-              aria-label='Message input'
+              as="textarea"
+              placeholder={
+                loading ? UI_TEXT.LOADING_PLACEHOLDER : UI_TEXT.INPUT_PLACEHOLDER
+              }
+              aria-label="Message input"
+              aria-describedby={aiError ? 'error-message' : undefined}
               value={input}
               onChange={(event) => setInput(event.target.value)}
               rows={2}
-              style={{ resize: 'none' }} // Prevent manual resizing by user
+              style={{ resize: 'none' }}
               disabled={loading}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e);
+                }
+              }}
             />
-            <Button onClick={() => onClick()} disabled={loading || !input}>
-              {loading ? <Spinner animation='border' size='sm' /> : 'Send'}
+            <Button
+              type="submit"
+              disabled={loading || !input.trim()}
+              aria-label="Send message"
+            >
+              {loading ? (
+                <>
+                  <Spinner animation="border" size="sm" aria-hidden="true" />{' '}
+                  <span className="visually-hidden">Sending...</span>
+                </>
+              ) : (
+                UI_TEXT.SEND_BUTTON
+              )}
             </Button>
           </InputGroup>
         </Form>
