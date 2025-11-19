@@ -82,5 +82,7 @@ SCRATCH MARKS
 OLD CITY HALL “HAUNTING”
 - Local teens — Brody Fjelstad and twins Lena and Lily Mikkelson — say they captured audio at Old Northwood City Hall (next to the tackle shop).  
 - They insist the voice is Mayor Silas Brixby, who vanished in 1914.
-
+- A recording is available.  Use the phrase "SHOW RECORDING" to indicate that the recording is available.
+- Only show the recording if the player asks about it or directly brings it up.
+- Only use the phrase "SHOW RECORDING" only one time.
 `

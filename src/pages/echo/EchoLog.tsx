@@ -13,15 +13,18 @@ import { generateResponse, Message } from './AIChat';
 import AILoading from './assets/AILoading';
 import OpenAI from 'openai';
 import Characters from './Characters';
+import { getAllDocs } from './DocsDrawer';
 
 export default ({
   aiKey,
   baseURL,
   aiModel,
+  setDocShow,
 }: {
   aiKey: string;
   baseURL: string;
   aiModel: string;
+  setDocShow: (response: string, show: boolean) => string;
 }) => {
   const [input, setInput] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -35,7 +38,6 @@ export default ({
     'Hello I am Detective Raymond Holt retired from the Northwood police department.  I was asked to help with the suspicious death of Harlan Pike. Ask me anything about the case to determine what happened.';
 
   const openai = new OpenAI({
-    // baseURL: 'http://localhost:11434/v1', // Point to Ollama's local API
     apiKey: aiKey,
     baseURL: baseURL,
     dangerouslyAllowBrowser: true,
@@ -46,6 +48,8 @@ export default ({
   // without triggering effects.
   const initializedRef = React.useRef(false);
   const scrollableDivRef = React.useRef(null);
+  const processedMessageIdsRef = React.useRef<Set<string>>(new Set());
+  
   React.useEffect(() => {
     if (scrollableDivRef.current) {
       //@ts-ignore
@@ -54,6 +58,16 @@ export default ({
         scrollableDivRef.current.scrollHeight;
     }
   }, [log]);
+
+  // Process new assistant messages for doc references
+  React.useEffect(() => {
+    log.forEach((message) => {
+      if (message.role === 'assistant' && !processedMessageIdsRef.current.has(message.id)) {
+        processedMessageIdsRef.current.add(message.id);
+        setDocShow(message.content, true);
+      }
+    });
+  }, [log, setDocShow]);
 
   const loadInitial = React.useCallback(async () => {
     setLoading(true);
@@ -71,7 +85,7 @@ export default ({
         'There is an issue loading the initial information.  Please refresh the page.',
       );
     } else if (newAiLog) {
-      setLog((prev) => [...prev, { role: 'assistant', content: AIIntro }]);
+      setLog((prev) => [...prev, { role: 'assistant', content: AIIntro, id:`${Date.now()}-assistant-intro` }]);
       setAILog(newAiLog);
     }
   }, []);
@@ -88,7 +102,7 @@ export default ({
   const onClick = async (prompt: string = '') => {
     setLoading(true);
 
-    setLog((prev) => [...prev, { role: 'user', content: prompt || input }]);
+    setLog((prev) => [...prev, { role: 'user', content: prompt || input, id:`${Date.now()}-user` }]);
     setInput('');
     const { aiLog: newAiLog, error } = await generateResponse(
       openai,
@@ -106,38 +120,92 @@ export default ({
       setAILog(newAiLog);
     }
   };
-  return (
-    <Card className='aiLog'>
-      <Card.Body>
-        <div className='aiLog_messages' ref={scrollableDivRef}>
-          {log.map((message, index) => (
-            // <div
-            //   key={index}
-            //   className={`aiLog_messages-message ${message.role === 'user' ? 'user' : ' agent'}`}
-            // >
-            //   <strong>{message.role === 'user' ? 'You' : AIName}:</strong>{' '}
-            //   {message.content}
-            // </div>
-            <Stack
+
+  const getMessageName = (rawMessage: string, role: Message['role'], key: string) => {
+    let charName = 'Me';
+    let message = rawMessage;
+    let charProfileImage = null;
+    if (role !== 'user') {
+      const { name, profileImage, regex } = Characters(rawMessage) || {};
+      charName = name || '';
+      charProfileImage = profileImage;
+
+      // Remove character regex patterns from message
+      message =
+        regex?.reduce((acc, curr) => acc.replace(curr, ''), rawMessage) || rawMessage;
+
+      // Remove all doc regex patterns from message display (doc processing happens in useEffect)
+      const docs = getAllDocs(message);
+      if (docs.length > 0) {
+        message = docs.reduce((cleanedResponse, doc) => {
+          return doc.regex.reduce(
+            (acc, regex) => acc.replace(regex, ' See doc drawer. '),
+            cleanedResponse,
+          );
+        }, message);
+      }
+    }
+
+    return (
+      <Stack
+        direction='horizontal'
+        gap={2}
+        className={`aiLog_messages-message ${role === 'user' ? 'user' : ''}`}
+        key={key}
+        style={{ alignItems: 'start' }}
+      >
+        {role !== 'user' && charProfileImage ? (
+          <img
+            src={charProfileImage}
+            alt={''}
+            style={{ width: '40px', height: '40px' }}
+          />
+        ) : null}
+
+        <div className='aiLog_messages-message'>
+          {!!charName ? <strong>{charName}: </strong> : null}
+
+          {message}
+        </div>
+      </Stack>
+    );
+
+    /*
+  <Stack
               direction='horizontal'
               gap={2}
               className={`aiLog_messages-message ${message.role === 'user' ? 'user' : ''}`}
               key={index}
-              style={{alignItems: 'start'}}
-         
+              style={{ alignItems: 'start' }}
             >
               {message.role === 'user' ? null : (
                 <img
-                  src={Characters(message.content)?.image}
+                  src={Characters(message.content)?.profileImage}
                   alt={Characters(message.content)?.name}
                   style={{ width: '40px', height: '40px' }}
                 />
               )}
               <div className='aiLog_messages-message'>
-               <strong>{message.role === 'user' ? 'Me' :Characters(message.content)?.name}:{' '}</strong>
+                <strong>
+                  {message.role === 'user'
+                    ? 'Me: '
+                    : `${Characters(message.content)?.name}: `}
+                  :{' '}
+                </strong>
                 {message.content}
               </div>
             </Stack>
+
+
+    */
+  };
+
+  return (
+    <Card className='aiLog'>
+      <Card.Body>
+        <div className='aiLog_messages' ref={scrollableDivRef}>
+          {log.map((message) => (
+            getMessageName(message.content, message.role, message.id)
           ))}
           {loading ? (
             <div className='aiLog_messages-message '>
@@ -149,7 +217,6 @@ export default ({
         {aiError ? (
           <Alert variant='danger'>{aiError} - Please try again</Alert>
         ) : null}
-      
 
         <Form>
           <InputGroup>

@@ -9,6 +9,7 @@ const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, tim
 export type Message = {
   role: 'user' | 'assistant' | 'system';
   content: string;
+  id: string;
 };
 
 export async function generateResponse(
@@ -23,31 +24,53 @@ export async function generateResponse(
   if (aiNewLog.length >= 40) {
     const summary = (await generateSummary(openai, model, aiNewLog)) || '';
     aiNewLog = [
-      { role: 'system', content: calibration_prompt },
-      { role: 'system', content: JSON.stringify(initialPrompts) },
+      { role: 'system', content: calibration_prompt, id:`${Date.now()}-system-calibration` },
+      { role: 'system', content: JSON.stringify(initialPrompts), id:`${Date.now()}-system-initial-prompts` },
       {
         role: 'system',
         content: `Summary of what has been discussed so far:${summary}`,
+        id:`${Date.now()}-system-summary`
       },
     ];
   }
   if (aiNewLog.length === 0) {
     aiNewLog = [
-      { role: 'system', content: calibration_prompt },
-      { role: 'system', content: JSON.stringify(initialPrompts) },
+      { role: 'system', content: calibration_prompt, id:`${Date.now()}-system-calibration` },
+      { role: 'system', content: JSON.stringify(initialPrompts), id:`${Date.now()}-system-initial-prompts` },
     ];
   } else {
-    aiNewLog.push({ role, content: prompt });
+    aiNewLog.push({ role, content: prompt , id:`${Date.now()}-user` });
   }
   try {
-    const chatCompletion = await openai.chat.completions.create({
-      model,
-      messages: aiNewLog,
-    });
+    // const chatCompletion = await openai.chat.completions.create({
+    //   model,
+    //   messages: aiNewLog,
+    // });
+
+    const chatCompletion = {
+      "id": "chatcmpl-CdkVVYb9AglriNUwxmQpF4OJJT07K",
+      "object": "chat.completion",
+      "created": 1763589601,
+      "model": "gpt-5-mini-2025-08-07",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "Darla: SHOW_RECORDING. Jaw tight. It’s short. Says I lied today — that I told someone Sam was my child. It demands $400 at the Birch Fork Diner walk-in freezer door if I want it kept quiet. Didn’t see who left it. I’m not paying. SHOW_NOTE_Darla",
+            "refusal": null,
+            "annotations": []
+          },
+          "finish_reason": "stop"
+        }
+      ]
+    }
+    
+    await sleep(1500);
 
         const response = chatCompletion.choices[0].message.content;
 
-    // sleep(1500);
+   
     
     // const response =  "Raymond Holt: Start with the four people who got notes. They’re the ones with secrets, and whoever’s leaking information had access to at least one of them.\n\n- Gordy Skoglund — runs the bait shop. Nervous about the muskie story. Might slip when he talks fishing.  \n- Aaron Heller — teacher. Talks a lot, even in his sleep. Financial details could point to someone in town.  \n- Martha Kellen — Cedar Spoon Pies. Worried about reputation, fusses over details.  \n- Darla Orlander — guarded, protective. If she trusts you she’ll open up; otherwise she’ll clam up.\n\nIf you want a lead on who could have overheard anything or where to look next, talk to me after those interviews. Quiet as a dock in January, I’ll parse it."
         
@@ -58,7 +81,7 @@ export async function generateResponse(
       response,
       aiLog: [
         ...aiNewLog,
-        { role: 'assistant', content: response },
+        { role: 'assistant', content: response, id:`${Date.now()}-assistant` },
       ] as Message[],
     };
   } catch (error) {
