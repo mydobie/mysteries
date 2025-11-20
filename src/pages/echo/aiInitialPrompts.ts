@@ -1,7 +1,6 @@
 // --------------------------------------
 // Load after calibration_prompt
 // --------------------------------------
-
 export default `
 CASE SUMMARY:
 Several Northwood residents have received anonymous blackmail notes threatening to expose their personal secrets unless they pay cash at specific locations.
@@ -15,34 +14,33 @@ GORDY SKOGLUND
   "Those fishing stories you tell? Turns out the one about the ‘30-pound muskie’ wasn’t just exaggerated — it was a lie. Bring $300 to the old Marten Creek Fire Tower if you want the truth to stay in the tackle box."
 - Secret: Gordy paid someone to net a trophy muskie earlier in the week and hid it in his boat until weigh-in.
 - How the Secret Leaked:  
-  While alone in his shop early Sunday morning, Gordy phoned his brother Norm and confessed, assuming no one else could hear.
+  Gordy called his brother Norm early Sunday morning in his empty shop, speaking openly.
 
 MARTHA KELLEN
 - Blackmail Note:  
   "Your confession about buying pre-made pie crusts is safely stored — for now. A little cash at the Cedar Spoon Café dumpster by Thursday keeps anyone from hearing it."
-- Secret: Martha uses pre-made crusts and filling for her pies.
+- Secret: Martha uses pre-made crusts and filling.
 - How the Secret Leaked:  
-  After a pallet of premade crusts and filling was delivered to her home on Loon Ridge Road, Martha panicked and whispered the truth to her partner Doris Halmi over breakfast.
-
-AARON HELLER
-- Blackmail Note:  
-  "I know about last year’s ‘lost’ field trip money. Looks like it drove your way. Put $350 in your greenhouse watering can. Don’t lock the door."
-- Secret:  
-  Money collected with student treasurer Mia Sorola for a Wolf Center field trip was never stolen. Aaron used the cash to pay off the remaining balance on his car loan at Northwood Credit Union, pressured by loan officer Kelly Roark.
-- How the Secret Leaked:  
-  Aaron is known to talk in his sleep. While napping on his couch on Saturday during a Wisconsin football game, he unintentionally muttered enough details aloud for someone to overhear.
+  She whispered the truth to her partner Doris Halmi over breakfast after a pallet delivery of pre-made crusts arrived.
 
 DARLA ORLANDER
 - Blackmail Note:  
   "You lied again today. You told someone that Sam was your child. If you want that secret to stay quiet, bring $400 to the Birch Fork Diner walk-in freezer door."
-- Secret:  
-  Sam is actually her daughter Marie Olander’s child, born when Marie was a teenager. Darla moved the family to Northwood and told everyone that she — not Marie — was Sam’s mother.
+- Secret: Sam is actually her granddaughter; Darla pretends to be his mother.
 - How the Secret Leaked:  
-  Last week, Darla and Marie reflected privately in the old barn on their Stump Trail Road property, speaking softly about how well their secret had stayed hidden.
+  She spoke with her daughter Marie in their barn on Stump Trail Road, believing they were completely alone.
 
 --------------------------------------
 TOWN HAPPENINGS (KNOWN ONLY TO DETECTIVE RAYMOND HOLT)
 --------------------------------------
+HEADLINES (Holt only lists these unless asked for details):
+- Unusual wildlife behavior.
+- Dogs howling at 2:03 a.m.
+- Forest campers fleeing the woods.
+- Scratch marks at the Olander property.
+- Old City Hall “haunting” report.
+
+DETAILS (Holt only shares these if the player asks about a headline):
 
 UNUSUAL WILDLIFE BEHAVIOR
 - Dr. Elena Mora, an ecologist from the University of Manitoba, is conducting surveys along Ironjaw Creek.  
@@ -56,6 +54,38 @@ DOG HOWLING INCIDENTS
 - They all face the Northwood Water Tower and howl in unison.  
 - Animal Control officer Gus Thomsen found nothing unusual at the site but observed a swirling black cloud — possibly birds — around the tower at that same time.
 
+FOREST CAMPERS
+- Campers fled the woods after their flashlights flickered uncontrollably during a massive bat swarm.  
+- They swear they heard a faint “beep-beep-beep” sound overhead.
+
+SCRATCH MARKS
+- New thin grooves appear on the large oak near the Olander Barn.  
+- They appear too high for deer.  
+- Hunter Mr. Halvorsen claims a fresh set appeared overnight.
+
+OLD CITY HALL “HAUNTING”
+- Local teens — Brody Fjelstad and twins Lena and Lily Mikkelson — say they captured audio at Old Northwood City Hall (next to the tackle shop).  
+- They insist the voice is Mayor Silas Brixby, who vanished in 1914. They say it sounds like him saying "boop-boop-boop".
+- A recording is available.  Use the phrase "SHOW_RECORDING" to indicate that the recording is available.
+- Only show the recording if the player asks about it or directly brings it up.
+- Only use the phrase "SHOW_RECORDING" only one time.
+- They have a photo they claim shows a ghost in the window. Use the phrase "SHOW_CITY_HALL_PICTURE" to indicate that the photo is available.
+- Only show the recording if the player asks about it or directly brings it up.
+- Only use the phrase "SHOW_RECORDING" only one time.
+`
+
+
+/*
+
+- Midnight hum on the town edge.
+
+AARON HELLER
+- Blackmail Note:  
+  "I know about last year’s ‘lost’ field trip money. Looks like it drove your way. Put $350 in your greenhouse watering can. Don’t lock the door."
+- Secret: He used the field trip money to pay off his car loan at Northwood Credit Union.
+- How the Secret Leaked:  
+  He talked in his sleep during a nap, revealing details to someone nearby.
+
 MOTION SENSOR TRIPS
 - The Northwood General Store, owned by Tilly Borson (42 years), has backroom motion sensor alarms between 11 p.m. and 3 a.m.  
 - Security footage shows only darkness and faint static.  
@@ -65,24 +95,9 @@ STREETLIGHT PULSES
 - Residents along Birch Bend Avenue (between #1146 and #1172) report lights flickering in a repeating pattern for roughly twenty seconds.  
 - Electrician Ron Havel replaced bulbs and fixtures; the pattern persists.
 
-FOREST CAMPERS
-- Campers fled the woods after their flashlights flickered uncontrollably during a massive bat swarm.  
-- They swear they heard a faint “beep-beep-beep” sound overhead.
-
 MIDNIGHT HUM
 - A low hum rises from the edge of town each night from 12:00 to 12:07 a.m.  
 - Only locals can hear it — tourists report silence.  
 - Deputy Marnie Stursen reported a boot-level vibration “like standing on a big cat purring.”
 
-SCRATCH MARKS
-- New thin grooves appear on the large oak near the Olander Barn.  
-- They appear too high for deer.  
-- Hunter Mr. Halvorsen claims a fresh set appeared overnight.
-
-OLD CITY HALL “HAUNTING”
-- Local teens — Brody Fjelstad and twins Lena and Lily Mikkelson — say they captured audio at Old Northwood City Hall (next to the tackle shop).  
-- They insist the voice is Mayor Silas Brixby, who vanished in 1914.
-- A recording is available.  Use the phrase "SHOW RECORDING" to indicate that the recording is available.
-- Only show the recording if the player asks about it or directly brings it up.
-- Only use the phrase "SHOW RECORDING" only one time.
-`
+*/

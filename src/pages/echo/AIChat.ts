@@ -12,25 +12,25 @@ export type Message = {
 
 let testMessage: any;
 
-testMessage = {
-  id: 'chatcmpl-CdlQVy5U4Nhyu2CXtCu8OhutKgt2v',
-  object: 'chat.completion',
-  created: 1763593135,
-  model: 'gpt-5-mini-2025-08-07',
-  choices: [
-    {
-      index: 0,
-      message: {
-        role: 'assistant',
-        content:
-          'SHOW_RECORDING. Darla: Yah. I got one. SHOW_NOTE_Darla.  \nIt says: "You lied again today. You told someone that Sam was your child. If you want that secret to stay quiet, bring $400 to the Birch Fork Diner walk-in freezer door."  \nI’m not paying. What do you want me to do about it?',
-        refusal: null,
-        annotations: [],
-      },
-      finish_reason: 'stop',
-    },
-  ],
-};
+// testMessage = {
+//   id: 'chatcmpl-CdlQVy5U4Nhyu2CXtCu8OhutKgt2v',
+//   object: 'chat.completion',
+//   created: 1763593135,
+//   model: 'gpt-5-mini-2025-08-07',
+//   choices: [
+//     {
+//       index: 0,
+//       message: {
+//         role: 'assistant',
+//         content:
+//           'SHOW_RECORDING. Darla: Yah. I got one. SHOW_NOTE_Darla.  \nIt says: "You lied again today. You told someone that Sam was your child. If you want that secret to stay quiet, bring $400 to the Birch Fork Diner walk-in freezer door."  \nI’m not paying. What do you want me to do about it?',
+//         refusal: null,
+//         annotations: [],
+//       },
+//       finish_reason: 'stop',
+//     },
+//   ],
+// };
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

@@ -48,13 +48,22 @@ body {
   }
 }
 
-.caseCard {
-  margin-top: 40px;
+.caseCard, .docsDrawer {
+ 
   margin-bottom: 40px;
   background-color: $midnightBlue;
 
-  border: 1px solid $crimsonRust;
-  .caseCard__title {
+  &.caseCard{
+     margin-top: 40px;
+     border: 1px solid $crimsonRust;
+  }
+
+  &.docsDrawer{
+    border: 1px solid$burntCopper;
+  }
+
+
+  .caseCard__title, .docsDrawer__title {
     color: $burntCopper;
   }
 }
@@ -169,7 +178,7 @@ body {
   background-color: $midnightBlue;
 }
 
-.modal {
+.modal, .docsDrawer {
   a {
     text-decoration: none;
     &:hover,

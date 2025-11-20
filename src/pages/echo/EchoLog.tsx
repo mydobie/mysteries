@@ -15,6 +15,22 @@ import { MessageItem } from './MessageItem';
 import { generateMessageId } from './utils';
 import { AI_INTRO_MESSAGE, UI_TEXT } from './constants';
 
+
+const aiButtons = [
+  {
+    label: 'Who is at the diner?',
+    prompt: 'Raymond who is at the diner?',
+  },
+  {
+    label: 'What is happening in town?',
+    prompt: 'Raymond what is happening in town?',
+  },
+  {
+    label: "How's the pie?",
+    prompt: "Raymond how's the pie?",
+  },
+];
+
 export default ({
   aiKey,
   baseURL,
@@ -177,6 +193,44 @@ export default ({
             {UI_TEXT.ERROR_RETRY}
           </Alert>
         ) : null}
+
+<div className='aiButtonBar'>
+  {aiButtons.map((button) => (
+    <Button
+      variant='outline-secondary'
+      onClick={() => onClick(button.prompt)}
+      disabled={loading}
+    >
+      {button.label}
+    </Button>
+  ))}
+</div>
+          {/* <Button
+            variant='outline-secondary'
+            onClick={() => onClick('Tell me about the crime scene')}
+            disabled={loading}
+          >
+            Tell me about the crime scene
+          </Button>
+          <Button
+            variant='outline-secondary'
+            onClick={() => {
+              onClick('Tell me about the suspects');
+            }}
+            disabled={loading}
+          >
+            Tell me about the suspects
+          </Button>
+          <Button
+            variant='outline-secondary'
+            onClick={() => {
+              onClick('Tell me about the timeline');
+            }}
+            disabled={loading}
+          >
+            Tell me about the timeline
+          </Button> 
+        </div>*/}
 
         <Form onSubmit={handleSubmit}>
           <InputGroup>

@@ -3,9 +3,12 @@ import darlaNote from './assets/ransom/darla-note.png';
 import marthaNote from './assets/ransom/martha-note.png';
 import aaronNote from './assets/ransom/aaron-note.png';
 import { useState } from 'react';
-import { Modal, Image, Button } from 'react-bootstrap';
-import { DOC_REPLACEMENT_TEXT, UI_TEXT } from './constants';
+import { Modal, Image, Button, Card } from 'react-bootstrap';
+import { DOC_REPLACEMENT_TEXT } from './constants';
 import { removeRegexPatterns } from './utils';
+import fileIcon from './assets/noun-files-drawer-5459265-9B9B9B.png';
+import cityHallPicture from './assets/cityHall.png';
+import recording from './assets/recording.png';
 
 export type Doc = {
   label: string;
@@ -47,14 +50,15 @@ export const docList = [
   },
   {
     label: 'Recording',
-    docContent: 'I AM A RECORDING',
+    // docContent: 'I AM A RECORDING',
+    docImage: recording,
     id: 'recording',
     show: false,
     regex: [/SHOW_RECORDING/i],
   },
   {
     label: 'City Hall Picture',
-    docContent: 'I AM AN IMAGE',
+    docImage: cityHallPicture,
     id: 'cityHall',
     show: false,
     regex: [/SHOW_CITY_HALL_PICTURE/i],
@@ -66,9 +70,10 @@ export const getDoc = (response: string) => {
 };
 
 export const getAllDocs = (response: string) => {
-  return docList.filter((doc) => doc.regex.some((regex) => regex.test(response)));
+  return docList.filter((doc) =>
+    doc.regex.some((regex) => regex.test(response)),
+  );
 };
-
 
 export const useDocsDrawer = () => {
   const [docs, setDocs] = useState([...docList]);
@@ -123,41 +128,61 @@ export const DocsDrawer = ({ docs }: { docs: Doc[] }) => {
     setSelectedDoc(null);
   };
 
+  const DocsList = () => {
+    const docsToShow = docs.filter((doc) => doc.show);
+    if (docsToShow.length === 0) {
+      return <div style={{color:'#929292'}}>No documents yet</div>;
+    }
+    return (
+      <ul>
+        {docsToShow.map((doc) => (
+          <li>
+            <a
+              href='#'
+              key={doc.id}
+              role='button'
+              onClick={(e) => {
+                e.preventDefault();
+                handleOpenModal(doc);
+              }}
+            >
+              {doc.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <>
-      <Modal show={!!selectedDoc} onHide={handleCloseModal} size="lg">
-        <Modal.Header closeButton>
+      <Modal show={!!selectedDoc} onHide={handleCloseModal} size='lg'>
+        <Modal.Header closeButton closeVariant='white'>
           <Modal.Title>{selectedDoc?.label}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {selectedDoc?.docContent && (
-            <div>{selectedDoc.docContent}</div>
-          )}
+          {selectedDoc?.docContent && <div>{selectedDoc.docContent}</div>}
           {selectedDoc?.docImage && (
-            <Image
-              src={selectedDoc.docImage}
-              alt={selectedDoc.label}
-              fluid
-            />
+            <Image src={selectedDoc.docImage} alt={selectedDoc.label} fluid />
           )}
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleCloseModal}>
+            Close
+          </Button>
+        </Modal.Footer>
       </Modal>
 
-      <div>
-        <strong>{UI_TEXT.DOCS_DRAWER_LABEL}</strong>
-        {docs
-          .filter((doc) => doc.show)
-          .map((doc) => (
-            <Button
-              variant="link"
-              key={doc.id}
-              onClick={() => handleOpenModal(doc)}
-              aria-label={`View ${doc.label}`}
-            >
-              {doc.label}
-            </Button>
-          ))}
-      </div>
+      <Card className='docsDrawer'>
+        <Card.Body>
+          <h2 className='h5 docsDrawer__title card-title'>
+            <img src={fileIcon} alt='Files' width={30} height={30} /> Documents
+            Drawer
+          </h2>
+
+          <DocsList />
+        </Card.Body>
+      </Card>
     </>
   );
 };

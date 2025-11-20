@@ -9,7 +9,7 @@ export const DOC_TRIGGERS = {
 } as const;
 
 // Replacement text for doc references
-export const DOC_REPLACEMENT_TEXT = ' See doc drawer. ';
+export const DOC_REPLACEMENT_TEXT = ' See doc drawer ';
 
 // Constants for message limits and delays
 export const MESSAGE_LIMIT = 40;
@@ -27,6 +27,10 @@ export const UI_TEXT = {
 } as const;
 
 // AI Introduction message
-export const AI_INTRO_MESSAGE =
-  'Hello I am Detective Raymond Holt retired from the Northwood police department.  I was asked to help with the suspicious death of Harlan Pike. Ask me anything about the case to determine what happened.';
+export const AI_INTRO_MESSAGE =`
+Several townspeople have recently received mysterious notes.  The towns people are afraid to talk directly to the police, but they are willing to talk to you.  
+Detective Raymond Holt has invited them to the Birch Fork Diner to talk to you. 
 
+** Your goal is to determine how all the notes are related **
+
+To talk to a  person, state their name first.  For example "Raymond how are you doing today?"`

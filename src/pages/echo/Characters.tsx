@@ -15,7 +15,7 @@ const chars: Character[] = [
   {
     name: 'Det. Holt',
     profileImage: raymond,
-    regex: [/Holt:/i, /Raymond:/i],
+    regex: [/Raymond Holt:/i,/Holt:/i, /Raymond:/i],
     id: 'raymond',
   },
   {
