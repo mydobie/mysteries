@@ -1,46 +1,26 @@
 import OpenAI from 'openai';
-import initialPrompts from './aiInitialPrompts';
-import { calibration_prompt } from './calibrationPrompt';
+
 import { generateMessageId } from './utils';
 import { MESSAGE_LIMIT } from './constants';
 
-export type Message = {
-  role: 'user' | 'assistant' | 'system';
-  content: string;
-  id: string;
-};
+import { Message } from './types';
 
-let testMessage: any;
-
-// testMessage = {
-//   id: 'chatcmpl-CdlQVy5U4Nhyu2CXtCu8OhutKgt2v',
-//   object: 'chat.completion',
-//   created: 1763593135,
-//   model: 'gpt-5-mini-2025-08-07',
-//   choices: [
-//     {
-//       index: 0,
-//       message: {
-//         role: 'assistant',
-//         content:
-//           'SHOW_RECORDING. Darla: Yah. I got one. SHOW_NOTE_Darla.  \nIt says: "You lied again today. You told someone that Sam was your child. If you want that secret to stay quiet, bring $400 to the Birch Fork Diner walk-in freezer door."  \nI’m not paying. What do you want me to do about it?',
-//         refusal: null,
-//         annotations: [],
-//       },
-//       finish_reason: 'stop',
-//     },
-//   ],
-// };
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function generateResponse(
-  openai: OpenAI,
-  model: string,
-  prompt: string,
-  aiLog: Message[],
-  role: Message['role'] = 'user',
-) {
+
+interface GenerateResponseProps {
+  openai: OpenAI;
+  model: string;
+  prompt: string;
+  aiLog: Message[];
+  role?: Message['role'];
+  testMessage?: any;
+  calibrationPrompt: string;
+  initialPrompts: string
+}
+
+export async function generateResponse({ openai, model, prompt, aiLog, role = 'user', testMessage, calibrationPrompt, initialPrompts }: GenerateResponseProps) {
   let aiNewLog = [...aiLog];
 
   if (aiNewLog.length >= MESSAGE_LIMIT) {
@@ -49,12 +29,12 @@ export async function generateResponse(
       aiNewLog = [
         {
           role: 'system',
-          content: calibration_prompt,
+          content: calibrationPrompt,
           id: generateMessageId('system-calibration'),
         },
         {
           role: 'system',
-          content: JSON.stringify(initialPrompts),
+          content: initialPrompts,
           id: generateMessageId('system-initial-prompts'),
         },
         {
@@ -69,12 +49,12 @@ export async function generateResponse(
     aiNewLog = [
       {
         role: 'system',
-        content: calibration_prompt,
+        content: calibrationPrompt,
         id: generateMessageId('system-calibration'),
       },
       {
         role: 'system',
-        content: JSON.stringify(initialPrompts),
+        content: initialPrompts,
         id: generateMessageId('system-initial-prompts'),
       },
     ];

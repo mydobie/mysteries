@@ -1,100 +1,25 @@
-import gordyNote from './assets/ransom/gordy-note.png';
-import darlaNote from './assets/ransom/darla-note.png';
-import marthaNote from './assets/ransom/martha-note.png';
-import aaronNote from './assets/ransom/aaron-note.png';
+
 import { useState } from 'react';
 import { Modal, Image, Button, Card } from 'react-bootstrap';
-import { DOC_REPLACEMENT_TEXT } from './constants';
-import { removeRegexPatterns } from './utils';
 import fileIcon from './assets/noun-files-drawer-5459265-9B9B9B.png';
-import cityHallPicture from './assets/cityHall.png';
-import recording from './assets/recording.png';
+import { Doc } from './types';
 
-export type Doc = {
-  label: string;
-  id: string;
-  show: boolean;
-  regex: RegExp[];
-  docImage?: string;
-  docContent?: string;
-};
 
-export const docList = [
-  {
-    label: 'Gordy Note',
-    docImage: gordyNote,
-    id: 'gordy-note',
-    show: false,
-    regex: [/SHOW_NOTE_Gordy/i],
-  },
-  {
-    label: 'Darla Note',
-    docImage: darlaNote,
-    id: 'darla-note',
-    show: false,
-    regex: [/SHOW_NOTE_Darla/i],
-  },
-  {
-    label: 'Martha Note',
-    docImage: marthaNote,
-    id: 'martha-note',
-    show: false,
-    regex: [/SHOW_NOTE_Martha/i],
-  },
-  {
-    label: 'Aaron Note',
-    docImage: aaronNote,
-    id: 'aaron-note',
-    show: false,
-    regex: [/SHOW_NOTE_Aaron/i],
-  },
-  {
-    label: 'Recording',
-    // docContent: 'I AM A RECORDING',
-    docImage: recording,
-    id: 'recording',
-    show: false,
-    regex: [/SHOW_RECORDING/i],
-  },
-  {
-    label: 'City Hall Picture',
-    docImage: cityHallPicture,
-    id: 'cityHall',
-    show: false,
-    regex: [/SHOW_CITY_HALL_PICTURE/i],
-  },
-];
 
-export const getDoc = (response: string) => {
-  return docList.find((doc) => doc.regex.some((regex) => regex.test(response)));
-};
 
-export const getAllDocs = (response: string) => {
+
+export const getMatchingDocsFromResponse = (response: string, docList: Doc[]) => {
   return docList.filter((doc) =>
     doc.regex.some((regex) => regex.test(response)),
   );
 };
 
-export const useDocsDrawer = () => {
+export const useDocsDrawer = (docList: Doc[]) => {
   const [docs, setDocs] = useState([...docList]);
 
-  const setDocShowById = (id: string, show: boolean) => {
-    setDocs((prevDocs) =>
-      prevDocs.map((doc) => (doc.id === id ? { ...doc, show } : doc)),
-    );
-  };
-
-  const setDocShow = (response: string, show: boolean) => {
-    const doc = getDoc(response);
-    if (doc) {
-      setDocShowById(doc.id, show);
-      return removeRegexPatterns(response, doc.regex, DOC_REPLACEMENT_TEXT);
-    }
-    return response;
-  };
 
   const setAllDocsShow = (response: string, show: boolean) => {
-    const matchingDocs = getAllDocs(response);
+    const matchingDocs = getMatchingDocsFromResponse(response, docList);
     const matchingDocIds = new Set(matchingDocs.map((doc) => doc.id));
 
     // Update all matching docs in a single state update
@@ -103,18 +28,9 @@ export const useDocsDrawer = () => {
         matchingDocIds.has(doc.id) ? { ...doc, show } : doc,
       ),
     );
-
-    // Remove all doc regex patterns from the response
-    return matchingDocs.reduce((cleanedResponse, doc) => {
-      return removeRegexPatterns(
-        cleanedResponse,
-        doc.regex,
-        DOC_REPLACEMENT_TEXT,
-      );
-    }, response);
   };
 
-  return { setDocShow, setAllDocsShow, setDocShowById, docs };
+  return {setAllDocsShow, docs };
 };
 
 export const DocsDrawer = ({ docs }: { docs: Doc[] }) => {

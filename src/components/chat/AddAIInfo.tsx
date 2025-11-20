@@ -21,7 +21,7 @@ export default ({
     <div>
       <p>
         This an interactive case were you communicate directly with the
-        detective investigating the case. There are two options:
+        characters involved in the case. There are two options:
       </p>
       <p>
         The first is to download this project from{' '}

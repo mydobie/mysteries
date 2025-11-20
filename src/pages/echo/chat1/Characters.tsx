@@ -1,17 +1,11 @@
-import aaron from './assets/avator/aaron.png';
-import darla from './assets/avator/darla.png';
-import gordy from './assets/avator/gordy.png';
-import martha from './assets/avator/martha.png';
-import raymond from './assets/avator/raymond.png';
+import aaron from '../assets/avator/aaron.png'
+import darla from '../assets/avator/darla.png';
+import gordy from '../assets/avator/gordy.png';
+import martha from '../assets/avator/martha.png';
+import raymond from '../assets/avator/raymond.png';
+import { Character } from '../../../components/chat/types';
 
-export interface Character {
-  name: string;
-  profileImage: string;
-  regex: RegExp[];
-  id: string;
-}
-
-const chars: Character[] = [
+export const chars: Character[] = [
   {
     name: 'Det. Holt',
     profileImage: raymond,
@@ -44,6 +38,5 @@ const chars: Character[] = [
   },
 ];
 
-export default function getCharacter(response: string): Character | undefined {
-  return chars.find((char) => char.regex.some((regex) => regex.test(response)));
-}
+
+export default chars;

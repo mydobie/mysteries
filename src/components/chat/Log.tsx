@@ -8,39 +8,38 @@ import {
   Alert,
 } from 'react-bootstrap';
 
-import { generateResponse, Message } from './AIChat';
+import { generateResponse } from './AIChat';
 import AILoading from './assets/AILoading';
 import OpenAI from 'openai';
 import { MessageItem } from './MessageItem';
 import { generateMessageId } from './utils';
-import { AI_INTRO_MESSAGE, UI_TEXT } from './constants';
-
-
-const aiButtons = [
-  {
-    label: 'Who is at the diner?',
-    prompt: 'Raymond who is at the diner?',
-  },
-  {
-    label: 'What is happening in town?',
-    prompt: 'Raymond what is happening in town?',
-  },
-  {
-    label: "How's the pie?",
-    prompt: "Raymond how's the pie?",
-  },
-];
+import { UI_TEXT } from './constants';
+import { PromptButton, Message, Character, Doc } from './types';
 
 export default ({
   aiKey,
   baseURL,
   aiModel,
   setDocShow,
+  aiButtons,
+  aiIntroMessage,
+  testMessage,
+  calibrationPrompt,
+  initialPrompts,
+  characters,
+  docsList,
 }: {
   aiKey: string;
   baseURL: string;
   aiModel: string;
-  setDocShow: (response: string, show: boolean) => string;
+  setDocShow: (response: string, show: boolean) => void;
+  aiButtons?: PromptButton[];
+  aiIntroMessage?: string;
+  testMessage?: any;
+  calibrationPrompt: string;
+  initialPrompts: string;
+  characters: Character[];
+  docsList?: Doc[];
 }) => {
   const [input, setInput] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -64,7 +63,7 @@ export default ({
   const initializedRef = React.useRef(false);
   const scrollableDivRef = React.useRef<HTMLDivElement | null>(null);
   const processedMessageIdsRef = React.useRef<Set<string>>(new Set());
-  
+
   React.useEffect(() => {
     if (scrollableDivRef.current) {
       scrollableDivRef.current.scrollTop =
@@ -89,27 +88,30 @@ export default ({
   const loadInitial = React.useCallback(async () => {
     setLoading(true);
 
-    const { aiLog: newAiLog, error } = await generateResponse(
+    const { aiLog: newAiLog, error } = await generateResponse({
       openai,
-      aiModel,
-      '',
-      [],
-    );
+      model: aiModel,
+      prompt: '',
+      aiLog: [],
+      testMessage,
+      calibrationPrompt,
+      initialPrompts,
+    });
     setLoading(false);
     if (error) {
       setAiError(UI_TEXT.INITIAL_LOAD_ERROR);
-    } else if (newAiLog) {
+    } else if (newAiLog && aiIntroMessage) {
       setLog((prev) => [
         ...prev,
         {
           role: 'assistant',
-          content: AI_INTRO_MESSAGE,
+          content: aiIntroMessage,
           id: generateMessageId('assistant-intro'),
         },
       ]);
       setAILog(newAiLog);
     }
-  }, [openai, aiModel]);
+  }, [openai, aiModel, aiIntroMessage]);
 
   React.useEffect(() => {
     // invoke the async initializer only once. In React 18 StrictMode this
@@ -136,12 +138,15 @@ export default ({
       ]);
       setInput('');
 
-      const { aiLog: newAiLog, error } = await generateResponse(
+      const { aiLog: newAiLog, error } = await generateResponse({
         openai,
-        aiModel,
-        messageContent,
+        model: aiModel,
+        prompt: messageContent,
         aiLog,
-      );
+        testMessage,
+        calibrationPrompt,
+        initialPrompts,
+      });
 
       setLoading(false);
 
@@ -164,82 +169,63 @@ export default ({
   );
 
   return (
-    <Card className="aiLog">
+    <Card className='aiLog'>
       <Card.Body>
         <div
-          className="aiLog_messages"
+          className='aiLog_messages'
           ref={scrollableDivRef}
-          role="log"
-          aria-live="polite"
-          aria-label="Chat messages"
+          role='log'
+          aria-live='polite'
+          aria-label='Chat messages'
         >
           {log.length === 0 && !loading ? (
-            <div className="aiLog_messages-message">
+            <div className='aiLog_messages-message'>
               <p>No messages yet. Start a conversation!</p>
             </div>
           ) : (
-            log.map((message) => <MessageItem key={message.id} message={message} />)
+            log.map((message) => (
+              <MessageItem key={message.id} message={message} characters={characters} docList={docsList || []} />
+            ))
           )}
           {loading ? (
-            <div className="aiLog_messages-message" aria-label="Loading response">
+            <div
+              className='aiLog_messages-message'
+              aria-label='Loading response'
+            >
               <AILoading />
             </div>
           ) : null}
         </div>
 
         {aiError ? (
-          <Alert variant="danger" role="alert" id="error-message">
+          <Alert variant='danger' role='alert' id='error-message'>
             {aiError}
             {UI_TEXT.ERROR_RETRY}
           </Alert>
         ) : null}
 
-<div className='aiButtonBar'>
-  {aiButtons.map((button) => (
-    <Button
-      variant='outline-secondary'
-      onClick={() => onClick(button.prompt)}
-      disabled={loading}
-    >
-      {button.label}
-    </Button>
-  ))}
-</div>
-          {/* <Button
-            variant='outline-secondary'
-            onClick={() => onClick('Tell me about the crime scene')}
-            disabled={loading}
-          >
-            Tell me about the crime scene
-          </Button>
-          <Button
-            variant='outline-secondary'
-            onClick={() => {
-              onClick('Tell me about the suspects');
-            }}
-            disabled={loading}
-          >
-            Tell me about the suspects
-          </Button>
-          <Button
-            variant='outline-secondary'
-            onClick={() => {
-              onClick('Tell me about the timeline');
-            }}
-            disabled={loading}
-          >
-            Tell me about the timeline
-          </Button> 
-        </div>*/}
+        <div className='aiButtonBar'>
+          {aiButtons?.map((button) => (
+            <Button
+              variant='outline-secondary'
+              onClick={() => onClick(button.prompt)}
+              disabled={loading}
+            >
+              {button.label}
+            </Button>
+          ))}
+        </div>
 
         <Form onSubmit={handleSubmit}>
           <InputGroup>
             <Form.Control
-              as="textarea"
+              as='textarea'
               placeholder={
-                loading ? UI_TEXT.LOADING_PLACEHOLDER : UI_TEXT.INPUT_PLACEHOLDER
+                loading
+                  ? UI_TEXT.LOADING_PLACEHOLDER
+                  : UI_TEXT.INPUT_PLACEHOLDER
               }
-              aria-label="Message input"
+              aria-label='Message input'
               aria-describedby={aiError ? 'error-message' : undefined}
               value={input}
               onChange={(event) => setInput(event.target.value)}
@@ -254,14 +240,14 @@ export default ({
               }}
             />
             <Button
-              type="submit"
+              type='submit'
               disabled={loading || !input.trim()}
-              aria-label="Send message"
+              aria-label='Send message'
             >
               {loading ? (
                 <>
-                  <Spinner animation="border" size="sm" aria-hidden="true" />{' '}
-                  <span className="visually-hidden">Sending...</span>
+                  <Spinner animation='border' size='sm' aria-hidden='true' />{' '}
+                  <span className='visually-hidden'>Sending...</span>
                 </>
               ) : (
                 UI_TEXT.SEND_BUTTON
