@@ -16,13 +16,17 @@ interface ChatProps {
   initialPrompts: string;
   characters: Character[];
   docsList? :Doc[];
+  handleShowSolution?: (visible: boolean) => void;
+  solutionString?: string;
+  solutionButtonText?: string;
 }
 
-const Chat: React.FC<ChatProps> = ({ showDocs, rightContent, aiButtons, aiIntroMessage , testMessage, calibrationPrompt, initialPrompts, characters, docsList}) => {
+const Chat: React.FC<ChatProps> = ({ showDocs, rightContent, aiButtons, aiIntroMessage , testMessage, calibrationPrompt, initialPrompts, characters, docsList, handleShowSolution, solutionString, solutionButtonText}) => {
   const [aiKey, setAIKey] = React.useState(constants.OPENAI_KEY);
   const [aiModel, setAIModel] = React.useState(constants.AI_MODAL);
 
   const { setAllDocsShow, docs } = useDocsDrawer(docsList || []);
+
 
   return (
     <Container>
@@ -43,6 +47,9 @@ const Chat: React.FC<ChatProps> = ({ showDocs, rightContent, aiButtons, aiIntroM
               initialPrompts={initialPrompts}
               characters={characters}
               docsList={docsList}
+              handleShowSolution={handleShowSolution}
+              solutionString={solutionString}
+              solutionButtonText={solutionButtonText}
             />
           ) : (
             <AddAIInfo setAIKey={setAIKey} setAIModel={setAIModel} />

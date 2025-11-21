@@ -21,7 +21,7 @@ const Home = (): ReactElement => {
                      Project Echo
                   </Card.Title>
                   <Card.Text className='typewriter'>
-                    NORTHWOOD — When mysterious messages start appearing in Northwood’, folks start to wonder who is listening ...
+                    NORTHWOOD — When mysterious messages start appearing in Northwood, folks start to wonder who is listening ...
                   </Card.Text>
                 </Card.Body>
               </Card>

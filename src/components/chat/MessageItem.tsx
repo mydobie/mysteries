@@ -1,6 +1,6 @@
 import React from 'react';
-import { Stack } from 'react-bootstrap';
-import getCharacter, { cleanUpResponse } from './utils';
+import { Button, Stack } from 'react-bootstrap';
+import getCharacter, { cleanUpResponse, isSolutionString } from './utils';
 import { Character, Doc, Message } from './types';
 import { UI_TEXT } from './constants';
 
@@ -8,10 +8,13 @@ interface MessageItemProps {
   message: Message;
   characters: Character[];
   docList: Doc[];
+  solutionString?: string;
+  handleShowSolution?: (visible: boolean) => void;
+  solutionButtonText?: string;
 }
 
 export const MessageItem = React.memo<MessageItemProps>(
-  ({ message, characters, docList }) => {
+  ({ message, characters, docList, solutionString, handleShowSolution, solutionButtonText }) => {
     const { content: rawMessage, role } = message;
     let displayMessage = rawMessage;
     let charName: string = UI_TEXT.USER_NAME;
@@ -24,10 +27,12 @@ export const MessageItem = React.memo<MessageItemProps>(
       charProfileImage = character?.profileImage || null;
 
 
+
       displayMessage = cleanUpResponse({
         response: rawMessage,
         docList,
         character,
+        solutionString,
       });
     }
 
@@ -52,6 +57,11 @@ export const MessageItem = React.memo<MessageItemProps>(
             <strong>{charName}: </strong>
           ) : null}
           {displayMessage}
+          {solutionString && isSolutionString(rawMessage, solutionString) && (
+            <Button variant='primary' onClick={() => handleShowSolution?.(true)}>
+              {solutionButtonText || 'See solution'}
+            </Button>
+          )}
         </div>
       </Stack>
     );

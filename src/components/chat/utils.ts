@@ -14,7 +14,7 @@ export function generateMessageId(role: string): string {
 }
 
 
-export function cleanUpResponse({response, docList, character}:{response: string, docList?: Doc[], character?: Character}): string {
+export function cleanUpResponse({response, docList, character, solutionString=''}:{response: string, docList?: Doc[], character?: Character, solutionString?: string}): string {
   let displayMessage = response;
   if (character?.regex) {
     displayMessage = character.regex.reduce(
@@ -29,9 +29,13 @@ export function cleanUpResponse({response, docList, character}:{response: string
     }, displayMessage);
   }
 
-  return displayMessage;
+  return displayMessage.replace(solutionString, '');
 }
 
 export default function getCharacter(response: string, characters: Character[]): Character | undefined {
   return characters.find((char) => char.regex.some((regex) => regex.test(response)));
+}
+
+export function isSolutionString(response: string, solutionString: string): boolean {
+  return response.includes(solutionString);
 }

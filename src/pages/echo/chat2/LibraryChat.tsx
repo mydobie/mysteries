@@ -10,10 +10,9 @@ import React from 'react';
 import Solution from './Solution';
 
 
-const AI_INTRO_MESSAGE =`Several townspeople have recently received mysterious notes.  The towns people are afraid to talk directly to the police, but they are willing to talk to you.  
-Detective Raymond Holt has invited them to the Birch Fork Diner to talk to you. 
+const AI_INTRO_MESSAGE =`Stumped on how the bats are related to the blackmail notes, Detective Holt has brought in numerous experts to the Northwood Public Library to help.
 
-** Your goal is to determine how all the notes are related **
+** Your goal is to determine what the bats have to do with the blackmail notes. **
 
 To talk to a  person, state their name first.  For example "Raymond how are you doing today?"`
 
@@ -48,7 +47,7 @@ const CafeChat = () => {
   return (
     <>
       <h2 className='h4'>
-        Birch Fork Diner
+        Northwood Public Library
       </h2>
       {showSolution ? <Solution /> : (<Chat 
       showDocs={true}

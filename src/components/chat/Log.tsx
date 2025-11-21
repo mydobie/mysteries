@@ -28,6 +28,9 @@ export default ({
   initialPrompts,
   characters,
   docsList,
+  handleShowSolution,
+  solutionString,
+  solutionButtonText
 }: {
   aiKey: string;
   baseURL: string;
@@ -40,6 +43,9 @@ export default ({
   initialPrompts: string;
   characters: Character[];
   docsList?: Doc[];
+  handleShowSolution?: (visible: boolean) => void;
+  solutionString?: string;
+  solutionButtonText?: string;
 }) => {
   const [input, setInput] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -184,7 +190,7 @@ export default ({
             </div>
           ) : (
             log.map((message) => (
-              <MessageItem key={message.id} message={message} characters={characters} docList={docsList || []} />
+              <MessageItem key={message.id} message={message} characters={characters} docList={docsList || []} solutionString={solutionString} handleShowSolution={handleShowSolution} solutionButtonText={solutionButtonText} />
             ))
           )}
           {loading ? (

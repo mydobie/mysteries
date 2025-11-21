@@ -59,7 +59,8 @@ FOREST CAMPERS
 - They swear they heard a faint “beep-beep-beep” sound overhead.
 
 SCRATCH MARKS
-- New thin grooves appear on the large oak near the Olander Barn.  
+- New thin scratch marks appear on the large oak near the Olander Barn.  
+- The large oak tree had a large number of strange black birds hanging from the branches.
 - They appear too high for deer.  
 - Hunter Mr. Halvorsen claims a fresh set appeared overnight.
 
