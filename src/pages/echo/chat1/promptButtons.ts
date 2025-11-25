@@ -4,8 +4,8 @@ export const promptButtons = [
     prompt: 'Raymond who is at the diner?',
   },
   {
-    label: 'What is happening in town?',
-    prompt: 'Raymond what is happening in town?',
+    label: 'What else is happening in town?',
+    prompt: 'Raymond what else is happening in town?',
   },
   {
     label: "How's the pie?",

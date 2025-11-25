@@ -1,0 +1,37 @@
+Determine suspects and make sure they are introduced into the story earlier
+
+Location - create a map where the locations of all the sitings are within 1 mile of secret cave
+
+List all the things the librarian finds
+    - historical things with bats
+
+Create an "about bats" doc that can be used by the visiting professor
+
+Determine what will be released after each task (both online and in print)
+
+Create summary for AI for each step (maybe ???)
+
+Create list of books about bats:
+ - Stellalina
+    Bats of the Republic
+    Underland Chronicles
+
+
+Create sample "cards" for tasks A, B, C etc.  
+
+********** Technical ****************
+
+
+Hold api key across pages of a story
+
+Consider moving a lot of the items in the chat into a context (see: https://github.com/mydobie/simple-vite-react-app/blob/main/src/demoFiles/App.tsx)
+
+Allow for the user to choose between print and online versions => This has to be on the main page as 2 doors
+Then routing inside will take them on a path. 
+
+Need to make is SUPER CLEAR what the task is and at the end "OPEN PACKET A" OR "DOWNLOAD FILES" etc.
+
+If it hasn't been done already - make package link text configurable to match (Packet A, B, etc)
+
+Create files of "Whey you are done ....  Go to ...." That can be put inside each envelope
+

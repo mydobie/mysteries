@@ -21,7 +21,7 @@ MARTHA KELLEN
   "Your confession about buying pre-made pie crusts is safely stored — for now. A little cash at the Cedar Spoon Café dumpster by Thursday keeps anyone from hearing it."
 - Secret: Martha uses pre-made crusts and filling.
 - How the Secret Leaked:  
-  She whispered the truth to her partner Doris Halmi over breakfast after a pallet delivery of pre-made crusts arrived.
+  She whispered the truth to her wife Doris Halmi over breakfast after a pallet delivery of pre-made crusts arrived.
 
 DARLA ORLANDER
 - Blackmail Note:  
