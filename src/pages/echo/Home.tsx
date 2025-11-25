@@ -1,15 +1,18 @@
 import { ReactElement } from 'react';
 import { Card, Container, Row, Col } from 'react-bootstrap';
 import { Outlet, useLocation } from 'react-router-dom';
-
+import AIProvider from '~/components/chat/AIContext';
+import constants from '~/constants';
 
 
 const Home = (): ReactElement => {
   const location = useLocation();
 
-  console.log(location.pathname);
+
+  console.log(constants);
   return (
     <>
+    <AIProvider>
       <Container>
         {location.pathname !== '/echo/' &&
         location.pathname !== '/echo' ? (
@@ -31,6 +34,7 @@ const Home = (): ReactElement => {
 
         <Outlet />
       </Container>
+    </AIProvider>
     </>
   );
 };

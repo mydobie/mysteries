@@ -1,15 +1,12 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
+import { useAI } from './AIContext';
 
-export default ({
-  setAIKey,
-  setAIModel,
-}: {
-  setAIKey: (key: string) => void;
-  setAIModel: (key: string) => void;
-}) => {
-  const [aiKey, setAIKeyValue] = React.useState('');
-  const [aiModel, setAIModelValue] = React.useState('gpt-5-mini');
+export default ({}) => {
+  const { setAIKey, setAIModel } = useAI();
+
+  const [aiKey, setAIKeyValue] = React.useState('');  // holder until changes are submit to the context
+  const [aiModel, setAIModelValue] = React.useState('gpt-5-mini');// holder until changes are submit to the context
   const [isOpen, setIsOpen] = React.useState(false);
 
   const onSave = () => {

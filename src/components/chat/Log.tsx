@@ -15,11 +15,9 @@ import { MessageItem } from './MessageItem';
 import { generateMessageId } from './utils';
 import { UI_TEXT } from './constants';
 import { PromptButton, Message, Character, Doc } from './types';
+import { useAI } from './AIContext';
 
 export default ({
-  aiKey,
-  baseURL,
-  aiModel,
   setDocShow,
   aiButtons,
   aiIntroMessage,
@@ -32,9 +30,6 @@ export default ({
   solutionString,
   solutionButtonText
 }: {
-  aiKey: string;
-  baseURL: string;
-  aiModel: string;
   setDocShow: (response: string, show: boolean) => void;
   aiButtons?: PromptButton[];
   aiIntroMessage?: string;
@@ -53,14 +48,16 @@ export default ({
   const [aiLog, setAILog] = React.useState<Message[]>([]);
   const [aiError, setAiError] = React.useState('');
 
+  const { aiKey, aiModel, aiBaseURL } = useAI();
+
   const openai = React.useMemo(
     () =>
       new OpenAI({
         apiKey: aiKey,
-        baseURL: baseURL,
+        baseURL: aiBaseURL,
         dangerouslyAllowBrowser: true,
       }),
-    [aiKey, baseURL],
+    [aiKey, aiBaseURL],
   );
 
   // guard to ensure the initial loader only runs once (React StrictMode can

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Container, Row, Col  } from 'react-bootstrap';
-import constants from '~/constants';
+import { Container, Row, Col, Alert  } from 'react-bootstrap';
 import { useDocsDrawer, DocsDrawer } from './DocsDrawer';
 import Log from './Log';
 import AddAIInfo from './AddAIInfo';
 import { Character, Doc, PromptButton } from './types';
+import { useAI } from './AIContext';
 
 interface ChatProps {
   showDocs: boolean;
@@ -22,10 +22,13 @@ interface ChatProps {
 }
 
 const Chat: React.FC<ChatProps> = ({ showDocs, rightContent, aiButtons, aiIntroMessage , testMessage, calibrationPrompt, initialPrompts, characters, docsList, handleShowSolution, solutionString, solutionButtonText}) => {
-  const [aiKey, setAIKey] = React.useState(constants.OPENAI_KEY);
-  const [aiModel, setAIModel] = React.useState(constants.AI_MODAL);
+  const { aiKey, aiModel,  setAIKey, setAIModel } = useAI();
 
   const { setAllDocsShow, docs } = useDocsDrawer(docsList || []);
+
+  if(!setAIKey || !setAIModel ) {
+   return <Alert variant='danger'>AIContext not found. Please check your AIContext provider.</Alert>
+  }
 
 
   return (
@@ -34,11 +37,8 @@ const Chat: React.FC<ChatProps> = ({ showDocs, rightContent, aiButtons, aiIntroM
       <Row>
         <Col md={8}>    
 
-          {aiKey ? (
+          {aiKey && aiModel ? (
             <Log
-              aiKey={aiKey}
-              baseURL={constants.AI_BASE_URL}
-              aiModel={aiModel}
               setDocShow={setAllDocsShow}
               aiButtons={aiButtons}
               aiIntroMessage={aiIntroMessage}
@@ -52,7 +52,7 @@ const Chat: React.FC<ChatProps> = ({ showDocs, rightContent, aiButtons, aiIntroM
               solutionButtonText={solutionButtonText}
             />
           ) : (
-            <AddAIInfo setAIKey={setAIKey} setAIModel={setAIModel} />
+            <AddAIInfo />
           )}
         </Col>
         <Col>
